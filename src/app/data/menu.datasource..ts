@@ -14,16 +14,19 @@ export class MenuDataSource implements DataSource<Menu> {
 
   constructor(private menuService: MenuService) { }
 
-  loadMenus(filter: string, page: number, size: number, sortBy: string, descending: boolean) {
+  loadMenus(filter: string, page: number, size: number, sortBy?: string, direction?: string) {
     this.loadingSubject.next(true);
 
-    this.menuService.findMenus(filter, page, size, sortBy, descending)
+    this.menuService.findMenus(filter, page, size, sortBy, direction)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false)))
       .subscribe(response => {
+        // tslint:disable-next-line: no-string-literal
         this.totalElements.next(response['totalElements']);
+        // tslint:disable-next-line: no-string-literal
         this.currentElements.next(response['currentElements']);
+        // tslint:disable-next-line: no-string-literal
         return this.menuSubject.next(response['payload']);
       });
   }

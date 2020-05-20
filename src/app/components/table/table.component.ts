@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MenuDataSource } from 'src/app/data/menu.datasource.';
 import { MenuService } from 'src/app/services/menu.service';
-import { tap } from 'rxjs/operators';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { fromEvent, merge } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -18,30 +19,49 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('input') input: ElementRef;
 
   constructor(private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.dataSource = new MenuDataSource(this.menuService);
-    this.dataSource.loadMenus('', 0, 8, '', false);
+    this.dataSource.loadMenus('', 0, 8);
   }
 
   ngAfterViewInit() {
-    this.paginator.page
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+
+          this.loadMenusPage();
+        })
+      )
+      .subscribe();
+
+    merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadMenusPage())
       )
       .subscribe();
   }
 
+
   loadMenusPage() {
+    console.log(this.input.nativeElement.value);
     this.dataSource.loadMenus(
-      '',
+      '', // this.input.nativeElement.value,
       this.paginator.pageIndex,
       this.paginator.pageSize,
-      '',
-      false);
+      this.sort.active,
+      this.sort.direction);
   }
+
+
   onRowClicked(row) {
     console.log('Row clicked: ', row);
   }

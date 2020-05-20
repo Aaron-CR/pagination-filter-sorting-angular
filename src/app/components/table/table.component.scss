@@ -29,13 +29,8 @@ h1 {
 }
 
 /* TABLE */
-.app-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
+.progress-bar {
+  height: 4px;
 }
 
 .mat-table {

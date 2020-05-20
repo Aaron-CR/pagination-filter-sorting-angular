@@ -11,7 +11,7 @@
     <div class="row d-flex align-items-center">
       <!-- Search -->
       <mat-form-field appearance="none" class="app-form-field mr-3">
-        <input matInput placeholder="Buscar...">
+        <input matInput placeholder="Buscar..." #input>
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
       <!-- Button -->
@@ -23,14 +23,12 @@
   <hr class="m-0">
   <div>
 
-    <mat-progress-bar mode="query" *ngIf="dataSource.loading$ | async"></mat-progress-bar>
-
-    <!-- Spinner -->
-    <div class="app-spinner" *ngIf="dataSource.loading$ | async">
-      <mat-spinner></mat-spinner>
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <mat-progress-bar mode="query" *ngIf="dataSource.loading$ | async"></mat-progress-bar>
     </div>
 
-    <mat-table matSort [dataSource]="dataSource">
+    <mat-table matSort matSortDisableClear="true" [dataSource]="dataSource">
 
       <!-- Dynamic column -->
       <ng-container *ngFor="let def of displayedColumns" [matColumnDef]="def">
@@ -61,7 +59,7 @@
       </mat-row>
     </mat-table>
 
-    <mat-paginator [length]="dataSource?.totalElements.value" [pageSize]="8"
-      [pageSizeOptions]="[4, 8, 12]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="dataSource?.totalElements.value" [pageSize]="8" [pageSizeOptions]="[4, 8, 12]"
+      showFirstLastButtons></mat-paginator>
   </div>
 </div>
