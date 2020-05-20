@@ -6,10 +6,10 @@ import { MenuService } from '../services/menu.service';
 
 
 export class MenuDataSource implements DataSource<Menu> {
+  
   private menuSubject = new BehaviorSubject<Menu[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public totalElements = new BehaviorSubject<number>(null);
-  public currentElements = new BehaviorSubject<number>(null);
+  public length = new BehaviorSubject<number>(null);
   public loading$ = this.loadingSubject.asObservable();
 
   constructor(private menuService: MenuService) { }
@@ -22,17 +22,12 @@ export class MenuDataSource implements DataSource<Menu> {
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false)))
       .subscribe(response => {
-        // tslint:disable-next-line: no-string-literal
-        this.totalElements.next(response['totalElements']);
-        // tslint:disable-next-line: no-string-literal
-        this.currentElements.next(response['currentElements']);
-        // tslint:disable-next-line: no-string-literal
+        this.length.next(response['length']);
         return this.menuSubject.next(response['payload']);
       });
   }
 
   connect(collectionViewer: CollectionViewer): Observable<Menu[]> {
-    console.log('Connecting data source');
     return this.menuSubject.asObservable();
   }
 
