@@ -5,6 +5,8 @@ import { MenuDataSource } from 'src/app/data/menu.datasource.';
 import { MenuService } from 'src/app/services/menu.service';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fromEvent, merge } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'app-table',
@@ -21,7 +23,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource = new MenuDataSource(this.menuService);
@@ -50,7 +52,6 @@ export class TableComponent implements AfterViewInit, OnInit {
       .subscribe();
   }
 
-
   loadMenusPage() {
     console.log(this.input.nativeElement.value);
     this.dataSource.loadMenus(
@@ -61,6 +62,17 @@ export class TableComponent implements AfterViewInit, OnInit {
       this.sort.direction);
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(FormComponent, {
+      width: '50%',
+      // data: { title: this.name, animal: this.animal }
+    });
+
+    /* dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    }); */
+  }
 
   onRowClicked(row) {
     console.log('Row clicked: ', row);
