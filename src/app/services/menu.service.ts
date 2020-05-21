@@ -11,8 +11,8 @@ export class MenuService {
 
   constructor(private http: HttpClient) { }
 
-  findMenus(filter = 'e', page = 0, size = 40, sortBy = 'title', direction = 'desc'): Observable<object> {
-    return this.http.get('http://localhost:8080/api/v1/menu/filter', {
+  findMenus(filter = '', page = 0, size = 40, sortBy = '', direction = 'desc'): Observable<object> {
+    return this.http.get('http://localhost:8080/api/v1/menu', {
       params: new HttpParams()
         .set('filter', filter)
         .set('page', page.toString())
@@ -21,5 +21,5 @@ export class MenuService {
         .set('direction', direction)
     });
   }
-  
+
 }
