@@ -1,0 +1,30 @@
+<div class="container my-5">
+
+  <div class="cards">
+
+    <div class="card" [routerLink]="['/articles']" routerLinkActive="router-link-active">
+      <div class="card_inner">
+        <span>articles</span>
+        <mat-icon>storefront</mat-icon>
+      </div>
+    </div>
+
+    <div class="card" [routerLink]="['/customers']" routerLinkActive="router-link-active">
+      <div class="card_inner">
+        <span>customers</span>
+        <mat-icon>people_alt</mat-icon>
+      </div>
+    </div>
+
+    <div class="card" [routerLink]="['/invoices']" routerLinkActive="router-link-active">
+      <div class="card_inner">
+        <span>invoices</span>
+        <mat-icon>receipt</mat-icon>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<app-table></app-table>

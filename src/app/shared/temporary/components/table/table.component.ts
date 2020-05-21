@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MenuDataSource } from 'src/app/data/menu.datasource.';
-import { MenuService } from 'src/app/services/menu.service';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fromEvent, merge } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { FormComponent } from '../form/form.component';
+import { MenuDataSource } from '../../data/menu.datasource.';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-table',
@@ -15,7 +15,7 @@ import { FormComponent } from '../form/form.component';
 })
 export class TableComponent implements AfterViewInit, OnInit {
   public icon = 'restaurant_menu';
-  public title = 'Menu';
+  public title = 'Menu (no generics)';
   public displayedColumns: string[] = ['id', 'title', 'category', 'price', 'availability'];
   public dataSource: MenuDataSource;
 
