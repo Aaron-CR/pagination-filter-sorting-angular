@@ -53,13 +53,8 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   applyFilter(event: any){
     // alert(event.target.value);
-    if ( event.target.value == null ) {
-      this.searchedValue = null;
-      this.loadMenusPage();
-    } else {
-      this.searchedValue = event.target.value;
-      this.loadMenusPage();
-    }
+    this.searchedValue = event.target.value;
+    this.loadMenusPage();
 
   }
 
