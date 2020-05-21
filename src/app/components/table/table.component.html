@@ -1,65 +1,63 @@
 <div class="card container col-9 my-5 px-0">
-  <!-- Header -->
-  <div class="header d-flex justify-content-between">
-    <!-- Title -->
-    <div class="row d-flex align-items-center">
-      <button mat-mini-fab disabled class="mr-3">
+    <!-- Header -->
+    <div class="header d-flex justify-content-between">
+        <!-- Title -->
+        <div class="row d-flex align-items-center">
+            <button mat-mini-fab disabled class="mr-3">
         <mat-icon>{{ icon }}</mat-icon>
       </button>
-      <h1>{{ title }}</h1>
-    </div>
-    <div class="row d-flex align-items-center">
-      <!-- Search -->
-      <mat-form-field appearance="none" class="app-form-field mr-3">
-        <input matInput placeholder="Buscar..." #input>
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-      <!-- Button -->
-      <button mat-raised-button color="primary">
+            <h1>{{ title }}</h1>
+        </div>
+        <div class="row d-flex align-items-center">
+            <!-- Search -->
+            <mat-form-field appearance="none" class="app-form-field mr-3">
+                <input matInput placeholder="Buscar..." #searchInput (keydown.enter)="applyFilter($event)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <!-- Button -->
+            <button mat-raised-button color="primary">
         <mat-icon [inline]="true">add</mat-icon> Añadir
       </button>
+        </div>
     </div>
-  </div>
-  <hr class="m-0">
-  <div>
+    <hr class="m-0">
+    <div>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar">
-      <mat-progress-bar mode="query" *ngIf="dataSource.loading$ | async"></mat-progress-bar>
-    </div>
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <mat-progress-bar mode="query" *ngIf="dataSource.loading$ | async"></mat-progress-bar>
+        </div>
 
-    <mat-table matSort matSortDisableClear="true" [dataSource]="dataSource">
+        <mat-table matSort matSortDisableClear="true" [dataSource]="dataSource">
 
-      <!-- Dynamic column -->
-      <ng-container *ngFor="let def of displayedColumns" [matColumnDef]="def">
-        <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | uppercase }} </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row[def]}} </mat-cell>
-      </ng-container>
+            <!-- Dynamic column -->
+            <ng-container *ngFor="let def of displayedColumns" [matColumnDef]="def">
+                <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | uppercase }} </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row[def]}} </mat-cell>
+            </ng-container>
 
-      <!-- Action column -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> ACTIONS </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <!-- Edit Button -->
-          <!-- <button mat-button mat-icon-button matTooltip="Editar" (click)="onSubmit(row)"> -->
-          <button mat-button mat-icon-button matTooltip="Editar">
+            <!-- Action column -->
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> ACTIONS </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <!-- Edit Button -->
+                    <!-- <button mat-button mat-icon-button matTooltip="Editar" (click)="onSubmit(row)"> -->
+                    <button mat-button mat-icon-button matTooltip="Editar">
             <mat-icon color="primary">mode_edit</mat-icon>
           </button>
-          <!-- Delete Button -->
-          <!-- <button mat-button mat-icon-button matTooltip="Eliminar" (click)="onDelete(row)"> -->
-          <button mat-button mat-icon-button matTooltip="Eliminar">
+                    <!-- Delete Button -->
+                    <!-- <button mat-button mat-icon-button matTooltip="Eliminar" (click)="onDelete(row)"> -->
+                    <button mat-button mat-icon-button matTooltip="Eliminar">
             <mat-icon color="warn">delete</mat-icon>
           </button>
-        </mat-cell>
-      </ng-container>
+                </mat-cell>
+            </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns.concat('actions')"></mat-header-row>
-      <mat-row class="table-row" *matRowDef="let row; columns: displayedColumns.concat('actions')"
-        (click)="onRowClicked(row)">
-      </mat-row>
-    </mat-table>
+            <mat-header-row *matHeaderRowDef="displayedColumns.concat('actions')"></mat-header-row>
+            <mat-row class="table-row" *matRowDef="let row; columns: displayedColumns.concat('actions')" (click)="onRowClicked(row)">
+            </mat-row>
+        </mat-table>
 
-    <mat-paginator [length]="dataSource?.totalElements.value" [pageSize]="8" [pageSizeOptions]="[4, 8, 12]"
-      showFirstLastButtons></mat-paginator>
-  </div>
+        <mat-paginator [length]="dataSource?.totalElements.value" [pageSize]="8" [pageSizeOptions]="[4, 8, 12]" showFirstLastButtons></mat-paginator>
+    </div>
 </div>

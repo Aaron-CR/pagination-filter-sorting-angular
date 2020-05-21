@@ -17,9 +17,11 @@ export class TableComponent implements AfterViewInit, OnInit {
   public displayedColumns: string[] = ['id', 'title', 'category', 'price', 'availability'];
   public dataSource: MenuDataSource;
 
+  searchedValue: string;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('searchInput') searchInput: ElementRef;
 
   constructor(private menuService: MenuService) { }
 
@@ -31,18 +33,6 @@ export class TableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    fromEvent(this.input.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(250),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-
-          this.loadMenusPage();
-        })
-      )
-      .subscribe();
-
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadMenusPage())
@@ -52,13 +42,25 @@ export class TableComponent implements AfterViewInit, OnInit {
 
 
   loadMenusPage() {
-    console.log(this.input.nativeElement.value);
+    // console.log(this.searchInput.nativeElement.value);
     this.dataSource.loadMenus(
-      '', // this.input.nativeElement.value,
+      this.searchedValue,
       this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.active,
       this.sort.direction);
+  }
+
+  applyFilter(event: any){
+    // alert(event.target.value);
+    if ( event.target.value == null ) {
+      this.searchedValue = null;
+      this.loadMenusPage();
+    } else {
+      this.searchedValue = event.target.value;
+      this.loadMenusPage();
+    }
+
   }
 
 
