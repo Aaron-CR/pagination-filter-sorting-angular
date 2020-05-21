@@ -33,6 +33,19 @@ export class TableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    fromEvent(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap(() => {
+          this.searchedValue = this.searchInput.nativeElement.value;
+          this.paginator.pageIndex = 0;
+
+          this.loadMenusPage();
+        })
+      )
+      .subscribe();
+
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => this.loadMenusPage())
@@ -51,12 +64,12 @@ export class TableComponent implements AfterViewInit, OnInit {
       this.sort.direction);
   }
 
-  applyFilter(event: any){
+  /* applyFilter(event: any){
     // alert(event.target.value);
     this.searchedValue = event.target.value;
     this.loadMenusPage();
 
-  }
+  } */
 
 
   onRowClicked(row) {

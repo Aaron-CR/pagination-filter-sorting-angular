@@ -11,7 +11,8 @@
         <div class="row d-flex align-items-center">
             <!-- Search -->
             <mat-form-field appearance="none" class="app-form-field mr-3">
-                <input matInput placeholder="Buscar..." #searchInput (keydown.enter)="applyFilter($event)">
+                <input matInput placeholder="Buscar..." #searchInput>
+                <!-- (keydown.enter)="applyFilter($event)" -->
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
             <!-- Button -->
