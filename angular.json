@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-material-crud-modelo"
+    }
+  },
+  "defaultProject": "angular-material-crud-modelo",
+  "cli": {
+    "analytics": false
+  }
 }

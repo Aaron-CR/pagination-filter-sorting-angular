@@ -19,6 +19,8 @@ export class TableComponent implements AfterViewInit, OnInit {
   public displayedColumns: string[] = ['id', 'title', 'category', 'price', 'availability'];
   public dataSource: MenuDataSource;
 
+  searchedValue: string;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
@@ -53,9 +55,8 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   loadMenusPage() {
-    console.log(this.input.nativeElement.value);
     this.dataSource.loadMenus(
-      '', // this.input.nativeElement.value,
+      this.input.nativeElement.value,
       this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.active,
@@ -69,8 +70,7 @@ export class TableComponent implements AfterViewInit, OnInit {
     });
 
     /* dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      console.log('The dialog was closed', result);
     }); */
   }
 
