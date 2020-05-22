@@ -1,0 +1,71 @@
+<div class="card container col-9 my-5 px-0">
+  <!-- Header -->
+  <div class="header d-flex justify-content-between">
+    <!-- Title -->
+    <div class="row d-flex align-items-center">
+      <button mat-mini-fab disabled class="mr-3">
+        <mat-icon>{{ icon }}</mat-icon>
+      </button>
+      <h1>{{ title }}</h1>
+    </div>
+    <div class="row d-flex align-items-center">
+      <!-- Search -->
+      <mat-form-field appearance="none" class="app-form-field mr-3">
+        <input matInput placeholder="Buscar..." #input>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <!-- Button -->
+      <button mat-raised-button color="primary" (click)="onCreate()">
+        <mat-icon [inline]="true">add</mat-icon> Añadir
+      </button>
+    </div>
+  </div>
+  <hr class="m-0">
+  <div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <mat-progress-bar mode="query" *ngIf="dataSource.loading$ | async"></mat-progress-bar>
+    </div>
+
+    <mat-table matSort matSortDisableClear="true" [dataSource]="dataSource">
+
+      <!-- Dynamic column -->
+      <ng-container *ngFor="let def of displayedColumns" [matColumnDef]="def">
+        <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | uppercase }} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row[def]}} </mat-cell>
+      </ng-container>
+
+      <!-- Action column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> ACTIONS </mat-header-cell>
+        <mat-cell *matCellDef="let item" (click)="$event.stopPropagation()">
+          <!-- Action Button -->
+          <button mat-button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <!-- Update Button -->
+            <button mat-menu-item (click)="onUpdate(item)">
+              <mat-icon class="app-menu-icon">mode_edit</mat-icon>
+              <span>Update</span>
+            </button>
+            <!-- Delete Button -->
+            <button mat-menu-item (click)="onDelete(item)">
+              <mat-icon class="app-menu-icon">delete</mat-icon>Delete
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns.concat('actions')"></mat-header-row>
+      <mat-row class="table-row" *matRowDef="let item; columns: displayedColumns.concat('actions')"
+        (click)="onRead(item)">
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="dataSource?.length.value" [pageSize]="8" [pageSizeOptions]="[4, 8, 12]"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

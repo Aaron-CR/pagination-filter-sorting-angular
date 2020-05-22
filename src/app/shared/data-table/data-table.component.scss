@@ -1,0 +1,58 @@
+/* CARD */
+.card {
+  border-radius: 25px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: lightgray;
+}
+
+/* HEADER */
+.header {
+  margin: 15px 30px;
+}
+
+h1 {
+  font-size: 32px;
+  margin: 0px;
+}
+
+.app-form-field {
+  border-width: 1px;
+  border-style: solid;
+  border-color: lightgrey;
+  padding: 0 20px;
+  border-radius: 20px;
+}
+
+::ng-deep .app-form-field .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+/* TABLE */
+.progress-bar {
+  height: 4px;
+}
+
+.mat-table {
+  min-height: 440px;
+}
+
+.table-row:hover {
+  background: whitesmoke;
+}
+
+.mat-paginator {
+  border-radius: 0 0 25px 25px;
+}
+
+/* BUTTON */
+.mat-raised-button {
+  height: 42px;
+  padding: 0 30px;
+  border-radius: 25px;
+  font-size: 18px;
+}
+
+.app-menu-icon {
+  font-size: 20px;
+}
