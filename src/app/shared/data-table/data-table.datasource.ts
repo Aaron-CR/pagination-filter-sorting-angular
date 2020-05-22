@@ -8,8 +8,9 @@ export class TableDataSource implements DataSource<any> {
 
   private tableSubject = new BehaviorSubject<any[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public length = new BehaviorSubject<number>(null);
+  public lengthSubject = new BehaviorSubject<number>(null);
   public loading$ = this.loadingSubject.asObservable();
+  public length$ = this.lengthSubject.asObservable();
 
   constructor(private dataTableService: DataTableService) { }
 
@@ -21,7 +22,7 @@ export class TableDataSource implements DataSource<any> {
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false)))
       .subscribe((response) => {
-        this.length.next(response['length']);
+        this.lengthSubject.next(response['length']);
         return this.tableSubject.next(response['payload']);
       });
   }

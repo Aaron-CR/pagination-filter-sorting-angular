@@ -12,7 +12,7 @@ export class ArticlesTableComponent implements OnInit {
   public path = 'http://localhost:8080/api/v1/article';
   public icon = 'storefront';
   public title = 'Articles';
-  public displayedColumns: string[] = ['name', 'category', 'stockUnits', 'unitPrice'];
+  public displayedColumns: string[] = ['title', 'category', 'stockUnits', 'price'];
 
   constructor(public dialog: MatDialog) { }
 

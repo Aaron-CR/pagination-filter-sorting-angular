@@ -53,3 +53,21 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+// reset
+button:focus {
+  outline: 0 !important;
+}
+
+// scrollbar
+::-webkit-scrollbar {
+  // width: 8px;
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(200, 200, 200);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(170, 170, 170);
+}

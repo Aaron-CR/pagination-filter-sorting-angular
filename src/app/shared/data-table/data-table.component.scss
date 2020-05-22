@@ -37,6 +37,10 @@ h1 {
   min-height: 440px;
 }
 
+.mat-column-actions {
+  flex: 0 0 90px !important;
+}
+
 .table-row:hover {
   background: whitesmoke;
 }
