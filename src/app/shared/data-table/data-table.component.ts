@@ -18,6 +18,8 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() public title = 'Table';
   @Input() public displayedColumns: any[];
 
+  @Input() createAction = true;
+
   @Output() create = new EventEmitter<any>();
   @Output() read = new EventEmitter<any>();
   @Output() update = new EventEmitter<any>();
@@ -74,7 +76,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   onCreate() {
-    console.log('Create a new item');
     this.create.emit();
   }
 

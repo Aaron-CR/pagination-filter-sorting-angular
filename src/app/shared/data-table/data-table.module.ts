@@ -1,24 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataTableComponent } from './data-table.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
+
+// Data table
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+
+// Form Controls
+import { MatInputModule } from '@angular/material/input';
+
+// Buttons & Indicators
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+// Navigation
 import { MatMenuModule } from '@angular/material/menu';
+
+import { DataTableComponent } from './data-table.component';
 import { DataTableService } from './data-table.service';
+
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
   declarations: [
-    DataTableComponent
+    DataTableComponent,
   ],
   imports: [
     CommonModule,
@@ -27,13 +35,11 @@ import { DataTableService } from './data-table.service';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule,
     MatProgressBarModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule,
-    MatStepperModule,
-    MatMenuModule
+    MatMenuModule,
+    PipesModule
   ],
   exports: [
     DataTableComponent

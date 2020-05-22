@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-form',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerFormComponent implements OnInit {
 
-  constructor() { }
+  customerFormGroup: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder) { }
+
+  ngOnInit() {
+    this.customerFormGroup = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      phone: ['', Validators.required],
+      fein: ['', Validators.required]
+    });
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-article-form',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleFormComponent implements OnInit {
 
-  constructor() { }
+  articleFormGroup: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder) { }
+
+  ngOnInit() {
+    this.articleFormGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      unitPrice: ['', Validators.required],
+      stockUnits: ['', Validators.required]
+    });
   }
 
 }

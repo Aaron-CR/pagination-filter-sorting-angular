@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ArticleFormComponent } from '../article-form/article-form.component';
 
 @Component({
   selector: 'app-articles-table',
@@ -7,21 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticlesTableComponent implements OnInit {
 
-  public path = 'http://localhost:8080/api/v1/menu';
-  public icon = 'restaurant_menu';
+  public path = 'http://localhost:8080/api/v1/article';
+  public icon = 'storefront';
   public title = 'Articles';
-  public displayedColumns: string[] = ['id', 'title', 'category', 'price', 'availability'];
+  public displayedColumns: string[] = ['name', 'category', 'stockUnits', 'unitPrice'];
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-  openDialog(): void {
-    /* const dialogRef = this.dialog.open(FormComponent, {
+  onCreate(): void {
+    const dialogRef = this.dialog.open(ArticleFormComponent, {
       width: '50%',
       // data: { title: this.name, animal: this.animal }
-    }); */
+    });
 
     /* dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
