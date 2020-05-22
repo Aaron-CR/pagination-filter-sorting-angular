@@ -37,6 +37,13 @@ $angular-material-crud-modelo-theme: mat-light-theme(
 @include angular-material-theme($angular-material-crud-modelo-theme);
 
 /* You can add global styles to this file, and also import other style files */
+.app-dialog-title {
+  font-size: 28px;
+}
+
+.app-dialog .mat-dialog-container {
+  border-radius: 20px;
+}
 
 html,
 body {

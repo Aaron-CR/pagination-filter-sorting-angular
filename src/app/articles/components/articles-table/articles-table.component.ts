@@ -21,6 +21,7 @@ export class ArticlesTableComponent implements OnInit {
 
   onCreate(): void {
     const dialogRef = this.dialog.open(ArticleFormComponent, {
+      panelClass: 'app-dialog',
       width: '50%',
       // data: { title: this.name, animal: this.animal }
     });

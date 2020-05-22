@@ -21,6 +21,7 @@ export class InvoicesTableComponent implements OnInit {
 
   onCreate(): void {
     const dialogRef = this.dialog.open(InvoiceFormComponent, {
+      panelClass: 'app-dialog',
       width: '50%',
       // data: { title: this.name, animal: this.animal }
     });
