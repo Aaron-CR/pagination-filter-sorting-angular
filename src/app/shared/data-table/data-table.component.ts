@@ -6,12 +6,31 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { TableDataSource } from './data-table.datasource';
 import { DataTableService } from './data-table.service';
 
+interface Category {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit, AfterViewInit {
+
+  categories: Category[] = [
+    { value: '', viewValue: 'All' },
+    { value: 'pizza', viewValue: 'Pizza' },
+    { value: 'cereals', viewValue: 'Cereals' },
+    { value: 'desserts', viewValue: 'Desserts' },
+    { value: 'noodles', viewValue: 'Noodles' },
+    { value: 'soups', viewValue: 'Soups' },
+    { value: 'sandwiches', viewValue: 'Sandwiches' },
+    { value: 'seafood', viewValue: 'Seafood' },
+    { value: 'salads', viewValue: 'Salads' },
+    { value: 'pasta', viewValue: 'Pasta' },
+    { value: 'pies', viewValue: 'Pies' }
+  ];
 
   @Input() public path: string;
   @Input() public icon = 'table_chart';
@@ -20,9 +39,8 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   @Input() createAction = true;
 
-  @Output() create = new EventEmitter<any>();
+  @Output() submit = new EventEmitter<any>();
   @Output() read = new EventEmitter<any>();
-  @Output() update = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -70,22 +88,15 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.sort.direction);
   }
 
-  onRead(item) {
-    console.log('Item clicked: ', item);
+  onRead(item: any) {
     this.read.emit(item);
   }
 
-  onCreate() {
-    this.create.emit();
+  onSubmit(item: any) {
+    this.submit.emit(item);
   }
 
-  onUpdate(item) {
-    console.log('Item to update: ', item);
-    this.update.emit(item);
-  }
-
-  onDelete(item) {
-    console.log('Item to delete: ', item);
+  onDelete(item: any) {
     this.delete.emit(item);
   }
 

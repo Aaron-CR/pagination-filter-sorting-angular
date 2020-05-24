@@ -1,3 +1,16 @@
-<app-data-table [path]="path" [icon]="icon" [title]="title" [displayedColumns]="displayedColumns"
-  (create)="onCreate()">
-</app-data-table>
+<mat-tab-group>
+  <mat-tab label="Pendiente">
+    <app-data-table [path]="path" [icon]="icon" [title]="title" [displayedColumns]="displayedColumns"
+      (submit)="onSubmit($event)">
+    </app-data-table>
+  </mat-tab>
+  <mat-tab label="Listo">
+    Content 2
+  </mat-tab>
+  <mat-tab label="En camino">
+    Content 3
+  </mat-tab>
+  <mat-tab label="Entregado">
+    Content 3
+  </mat-tab>
+</mat-tab-group>

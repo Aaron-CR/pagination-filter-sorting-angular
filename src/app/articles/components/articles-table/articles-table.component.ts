@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ArticleFormComponent } from '../article-form/article-form.component';
+import { Article } from 'src/app/shared/models/article';
 
 @Component({
   selector: 'app-articles-table',
@@ -19,16 +20,34 @@ export class ArticlesTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCreate(): void {
-    const dialogRef = this.dialog.open(ArticleFormComponent, {
+  onSubmit(object: any): void {
+    this.dialog.open(ArticleFormComponent, {
       panelClass: 'app-dialog',
+      disableClose: true,
+      data: object,
       width: '50%',
-      // data: { title: this.name, animal: this.animal }
+    }).afterClosed().subscribe(result => {
+      if (result.event === 'Add') {
+        this.create(result.data);
+      } else if (result.event === 'Update') {
+        this.update(result.data);
+      }
     });
+  }
 
-    /* dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    }); */
+  create(article: Article) {
+    console.log('create');
+    // this.articleService.create(article);
+  }
+
+  update(article: Article) {
+    console.log('update');
+    // this.articleService.update(article);
+  }
+
+  delete(id: string) {
+    console.log('delete');
+    // this.articleService.delete(id);
   }
 
 }
