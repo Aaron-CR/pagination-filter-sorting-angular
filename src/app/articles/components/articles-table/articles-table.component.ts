@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { Article } from 'src/app/shared/models/article';
 

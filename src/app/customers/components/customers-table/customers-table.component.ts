@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CustomerFormComponent } from '../customer-form/customer-form.component';
+import { Customer } from 'src/app/shared/models/customer';
 
 @Component({
   selector: 'app-customers-table',
@@ -19,15 +20,34 @@ export class CustomersTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCreate(): void {
-    const dialogRef = this.dialog.open(CustomerFormComponent, {
+  onSubmit(object: any): void {
+    this.dialog.open(CustomerFormComponent, {
       panelClass: 'app-dialog',
+      disableClose: true,
+      data: object,
       width: '50%',
-      // data: { title: this.name, animal: this.animal }
+    }).afterClosed().subscribe(result => {
+      if (result.event === 'Add') {
+        this.create(result.data);
+      } else if (result.event === 'Update') {
+        this.update(result.data);
+      }
     });
-
-    /* dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    }); */
   }
+
+  create(customer: Customer) {
+    console.log('create');
+    // this.customerService.create(customer);
+  }
+
+  update(customer: Customer) {
+    console.log('update');
+    // this.customerService.update(customer);
+  }
+
+  delete(id: string) {
+    console.log('delete');
+    // this.customerService.delete(id);
+  }
+
 }

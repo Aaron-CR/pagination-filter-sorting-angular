@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./article-form.component.scss']
 })
 export class ArticleFormComponent implements OnInit {
+
   public localData: Article;
   public action: string;
   public articleFormGroup: FormGroup;
