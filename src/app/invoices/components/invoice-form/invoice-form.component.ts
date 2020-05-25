@@ -2,6 +2,7 @@ import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Invoice } from 'src/app/shared/models/invoice';
+import { InvoiceDetail } from 'src/app/shared/models/invoice-detail';
 
 @Component({
   selector: 'app-invoice-form',
@@ -14,8 +15,12 @@ export class InvoiceFormComponent implements OnInit {
   public action: string;
   public invoiceFormGroup: FormGroup;
 
-  get articles(): FormArray {
-    return this.invoiceFormGroup.get('articles') as FormArray;
+  get details(): FormArray {
+    return this.invoiceFormGroup.get('details') as FormArray;
+  }
+
+  get requiredArticle(): boolean {
+    return this.details.length === 1;
   }
 
   constructor(
@@ -28,21 +33,43 @@ export class InvoiceFormComponent implements OnInit {
 
   ngOnInit() {
     this.invoiceFormGroup = this.formBuilder.group({
-      customer: ['', [Validators.required]],
-      paymentMethod: ['', [Validators.required]],
-      articles: this.formBuilder.array([this.buildArticles()])
+      customer: [this.localData.customer, [Validators.required]],
+      paymentMethod: [this.localData.paymentMethod, [Validators.required]],
+      details: this.formBuilder.array([this.buildDetail()])
     });
   }
 
-  addArticles(): void {
-    this.articles.push(this.buildArticles());
+  // TODO: FIX
+  setDetails(details: InvoiceDetail[]) {
+    if (details) {
+      details.forEach(detail =>
+        this.details.push(this.setDetail(detail))
+      );
+    }
+    console.log('details is empty');
+    this.buildDetail();
   }
 
-  buildArticles(): FormGroup {
+  setDetail(detail: InvoiceDetail) {
+    return this.formBuilder.group({
+      article: [detail.article, Validators.required],
+      quantity: [detail.quantity, Validators.required],
+    });
+  }
+
+  buildDetail() {
     return this.formBuilder.group({
       article: ['', Validators.required],
       quantity: ['', Validators.required],
     });
+  }
+
+  addDetail(): void {
+    this.details.push(this.buildDetail());
+  }
+
+  removeDetail(index: number): void {
+    this.details.removeAt(index);
   }
 
   setAction() {

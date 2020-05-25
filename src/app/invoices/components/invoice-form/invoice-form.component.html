@@ -23,11 +23,11 @@
       </div>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Fill out the articles</ng-template>
+      <ng-template matStepLabel>Fill out the details</ng-template>
       <form novalidate [formGroup]="invoiceFormGroup">
-        <div formArrayName="articles">
-          <div [formGroupName]="i" *ngFor="let detail of articles.controls; let i=index">
-            <div class="pb-3 d-flex flex-fill align-items-center">
+        <div formArrayName="details">
+          <div [formGroupName]="i" *ngFor="let detail of details.controls; let i=index">
+            <div class="d-flex flex-fill align-items-center">
               <div class="p-2 flex-grow-1">
                 <mat-form-field class="w-100">
                   <mat-label>Article</mat-label>
@@ -42,17 +42,17 @@
                     formControlName="quantity" required>
                 </mat-form-field>
               </div>
-              <div class="p-2">
-                <button mat-button mat-icon-button matTooltip="Eliminar">
-                  <mat-icon color="warn">delete</mat-icon>
+              <div class="p-2" [matTooltip]="requiredArticle ? 'Disabled' : 'Delete article'">
+                <button mat-button mat-icon-button [disabled]="requiredArticle" (click)="removeDetail(i)">
+                  <mat-icon [color]="requiredArticle ? '' : 'warn'">delete</mat-icon>
                 </button>
               </div>
             </div>
           </div>
-          <div class="row mb-2">
-            <div class="col-md-4" [matTooltip]="articles.valid ? 'Add another article detail' : 'Disabled until the existing detail data is
+          <div class="row pb-3">
+            <div class="col-md-4" [matTooltip]="details.valid ? 'Add another article detail' : 'Disabled until the existing detail data is
               valid'">
-              <button mat-flat-button color="primary" [disabled]="!articles.valid" (click)="addArticles()">
+              <button mat-flat-button color="primary" [disabled]="!details.valid" (click)="addDetail()">
                 Add Another Article
               </button>
             </div>
