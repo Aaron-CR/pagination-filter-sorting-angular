@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Optional, Inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Invoice } from 'src/app/shared/models/invoice';
 
 @Component({
   selector: 'app-invoice-form',
@@ -8,28 +10,55 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class InvoiceFormComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  public localData: Invoice;
+  public action: string;
+  public invoiceFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  get articles(): FormArray {
+    return this.invoiceFormGroup.get('articles') as FormArray;
+  }
+
+  constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Invoice,
+    public dialogRef: MatDialogRef<InvoiceFormComponent>,
+    public formBuilder: FormBuilder
+  ) {
+    this.localData = { ...data };
+  }
 
   ngOnInit() {
-    this.firstFormGroup = this.formBuilder.group({
-      title: ['', Validators.required],
-      price: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['', Validators.required]
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      ingredients: this.formBuilder.array([this.buildIngredients])
+    this.invoiceFormGroup = this.formBuilder.group({
+      customer: ['', [Validators.required]],
+      paymentMethod: ['', [Validators.required]],
+      articles: this.formBuilder.array([this.buildArticles()])
     });
   }
 
-  buildIngredients(): FormGroup {
+  addArticles(): void {
+    this.articles.push(this.buildArticles());
+  }
+
+  buildArticles(): FormGroup {
     return this.formBuilder.group({
       article: ['', Validators.required],
-      quantity: ['', Validators.required]
+      quantity: ['', Validators.required],
     });
+  }
+
+  setAction() {
+    this.action = (this.localData.id) ? 'Update' : 'Add';
+  }
+
+  onAction() {
+    this.dialogRef.close({ event: this.action, data: this.invoiceFormGroup.value });
+  }
+
+  onCancel() {
+    this.dialogRef.close({ event: 'Cancel' });
+  }
+
+  errorHandling = (control: string, error: string) => {
+    return this.invoiceFormGroup.controls[control].hasError(error);
   }
 
 }
