@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fromEvent, merge } from 'rxjs';
@@ -6,6 +6,9 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { TableDataSource } from './data-table.datasource';
 import { DataTableService } from './data-table.service';
 import { ComponentType } from '@angular/cdk/portal';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ArticleFormComponent } from '../views/articles/components/article-form/article-form.component';
 
 interface Category {
   value: string;
@@ -19,18 +22,12 @@ interface Category {
 })
 export class DataTableComponent implements OnInit, AfterViewInit {
 
-  @Input() public path: string;
-  @Input() public icon = 'table_chart';
-  @Input() public title = 'Table';
-  @Input() public dialog: ComponentType<any>;
-  @Input() public displayedColumns: any[];
-
+  @Input() path: string;
+  @Input() formDialog: TemplateRef<any>;
+  @Input() displayedColumns: any[];
+  @Input() title = 'Table';
+  @Input() icon = 'table_chart';
   @Input() createAction = true;
-
-  @Output() submit = new EventEmitter<any>();
-  @Output() read = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<any>();
-  @Output() refresh = new EventEmitter<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +35,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   public dataSource: TableDataSource;
 
-  constructor(private dataTableService: DataTableService) { }
+  constructor(
+    private dataTableService: DataTableService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.dataSource = new TableDataSource(this.dataTableService);
@@ -49,22 +50,14 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     fromEvent(this.input.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-
-          this.loadPage();
-        })
-      )
-      .subscribe();
+      .pipe(debounceTime(500), distinctUntilChanged(), tap(() => {
+        this.paginator.pageIndex = 0;
+        this.loadPage();
+      })).subscribe();
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadPage())
-      )
-      .subscribe();
+      .pipe(tap(() => this.loadPage())
+      ).subscribe();
   }
 
   loadPage() {
@@ -77,20 +70,46 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.sort.direction);
   }
 
-  onRead(item: any) {
-    this.read.emit(item);
+  onSubmit(object: any): void {
+    this.dialog.open(this.formDialog, {
+      panelClass: 'app-dialog',
+      disableClose: true,
+      data: object,
+      width: '50%',
+    }).afterClosed().subscribe(result => {
+      if (result.event === 'Add') {
+        this.create(result.data);
+      } else if (result.event === 'Update') {
+        this.update(result.data);
+      }
+    });
   }
 
-  onSubmit(item: any) {
-    this.submit.emit(item);
+  create(object: any) {
+    this.dataTableService.create(this.path, object).subscribe(() => {
+      this.success('Añadido!, Se ha añadido correctamente.');
+    });
   }
 
-  onDelete(item: any) {
-    this.delete.emit(item);
+  update(object: any) {
+    this.dataTableService.update(this.path, object, object.id).subscribe(() => {
+      this.success('Actualizado!, Se ha actualizado correctamente.');
+    });
   }
 
-  onRefresh() {
-    this.refresh.emit(this.loadPage());
+  onDelete(object: any) {
+    this.dataTableService.delete(this.path, object.id).subscribe(() => {
+      this.success('Eliminado!, Se ha eliminado correctamente.');
+    });
+  }
+
+  success(text: string) {
+    this.snackBar.open(text, 'OK', { duration: 10000 });
+    this.loadPage();
+  }
+
+  onRead(object: any) {
+    console.log(object);
   }
 
 }

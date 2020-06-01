@@ -2,17 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataTableService {
 
-  constructor(
-    private httpClient: HttpClient,
-    private snackBar: MatSnackBar
-  ) { }
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) { }
 
   findAll(path: string, filter = '', page = 0, size = 8, sortBy = '', direction = 'desc'): Observable<object> {
     return this.httpClient.get(path, {
@@ -23,6 +20,26 @@ export class DataTableService {
         .set('sortBy', sortBy)
         .set('direction', direction)
     }).pipe(catchError(error => this.handleError(error)));
+  }
+
+  findById(path: string, id: number): Observable<object> {
+    return this.httpClient.get(`${path}/${id}`)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  create(path: string, object: object): Observable<object> {
+    return this.httpClient.post(path, object)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  update(path: string, object: object, id: number): Observable<object> {
+    return this.httpClient.put(`${path}/${id}`, object)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  delete(path: string, id: number): Observable<object> {
+    return this.httpClient.delete(`${path}/${id}`)
+      .pipe(catchError(error => this.handleError(error)));
   }
 
   private handleError(err) {
