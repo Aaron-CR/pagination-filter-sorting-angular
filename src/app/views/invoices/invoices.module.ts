@@ -7,12 +7,14 @@ import { InvoiceFormComponent } from './components/invoice-form/invoice-form.com
 import { SharedModule } from '../../shared/shared.module';
 import { DataTableModule } from 'src/app/data-table/data-table.module';
 import { MaterialModule } from 'src/app/material/material.module';
+import { InvoiceDetailComponent } from './components/invoice-detail/invoice-detail.component';
 
 
 @NgModule({
   declarations: [
     InvoicesTableComponent,
-    InvoiceFormComponent
+    InvoiceFormComponent,
+    InvoiceDetailComponent
   ],
   imports: [
     CommonModule,

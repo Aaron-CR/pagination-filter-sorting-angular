@@ -7,12 +7,14 @@ import { ArticleFormComponent } from './components/article-form/article-form.com
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { DataTableModule } from 'src/app/data-table/data-table.module';
+import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 
 
 @NgModule({
   declarations: [
     ArticlesTableComponent,
-    ArticleFormComponent
+    ArticleFormComponent,
+    ArticleDetailComponent
   ],
   imports: [
     CommonModule,

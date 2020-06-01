@@ -3,7 +3,6 @@ import { BehaviorSubject, of, Observable } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DataTableService } from './data-table.service';
 
-
 export class TableDataSource implements DataSource<any> {
 
   private tableSubject = new BehaviorSubject<any[]>([]);

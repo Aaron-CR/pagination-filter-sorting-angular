@@ -7,12 +7,14 @@ import { CustomerFormComponent } from './components/customer-form/customer-form.
 import { SharedModule } from '../../shared/shared.module';
 import { DataTableModule } from 'src/app/data-table/data-table.module';
 import { MaterialModule } from 'src/app/material/material.module';
+import { CustomerDetailComponent } from './components/customer-detail/customer-detail.component';
 
 
 @NgModule({
   declarations: [
     CustomersTableComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
+    CustomerDetailComponent
   ],
   imports: [
     CommonModule,

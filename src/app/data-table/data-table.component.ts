@@ -1,19 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, TemplateRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { TableDataSource } from './data-table.datasource';
 import { DataTableService } from './data-table.service';
-import { ComponentType } from '@angular/cdk/portal';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ArticleFormComponent } from '../views/articles/components/article-form/article-form.component';
-
-interface Category {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-data-table',
@@ -24,6 +17,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   @Input() path: string;
   @Input() formDialog: TemplateRef<any>;
+  @Input() detailDialog: TemplateRef<any>;
   @Input() displayedColumns: any[];
   @Input() title = 'Table';
   @Input() icon = 'table_chart';
@@ -108,8 +102,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.loadPage();
   }
 
-  onRead(object: any) {
-    console.log(object);
+  onRead(object: any): void {
+    this.dialog.open(this.detailDialog, {
+      panelClass: 'app-dialog',
+      disableClose: true,
+      data: object,
+      width: '50%',
+    });
   }
 
 }

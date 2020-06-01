@@ -1,0 +1,9 @@
+<div mat-dialog-title class="d-flex justify-content-between align-items-center app-dialog-title">
+  <span> {{ name | titlecase }} </span>
+  <button mat-button mat-icon-button (click)="onCancel()">
+    <mat-icon> close </mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="app-content">
+  {{ localData | json}}
+</mat-dialog-content>
