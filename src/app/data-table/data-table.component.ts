@@ -81,19 +81,19 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   create(object: any) {
     this.dataTableService.create(this.path, object).subscribe(() => {
-      this.success('Añadido!, Se ha añadido correctamente.');
+      this.success('Added!');
     });
   }
 
   update(object: any) {
     this.dataTableService.update(this.path, object, object.id).subscribe(() => {
-      this.success('Actualizado!, Se ha actualizado correctamente.');
+      this.success('Updated!');
     });
   }
 
   onDelete(object: any) {
-    this.dataTableService.delete(this.path, object.id).subscribe(() => {
-      this.success('Eliminado!, Se ha eliminado correctamente.');
+    this.dataTableService.delete(this.path, object, object.id).subscribe(() => {
+      this.success('Deleted!');
     });
   }
 

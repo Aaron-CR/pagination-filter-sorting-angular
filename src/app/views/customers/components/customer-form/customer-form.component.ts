@@ -29,6 +29,7 @@ export class CustomerFormComponent implements OnInit {
 
   buildForm() {
     this.customerFormGroup = this.formBuilder.group({
+      id: [this.localData.id, Validators.required],
       firstName: [this.localData.firstName, Validators.required],
       lastName: [this.localData.lastName, Validators.required],
       email: [this.localData.email, Validators.required],

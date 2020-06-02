@@ -1,9 +1,5 @@
-import { Base } from './base';
+import { Person } from './person';
 
-export class Customer extends Base {
-  firstName: string;
-  lastName: string;
+export class Customer extends Person {
   email: string;
-  phone: number;
-  fein: number;
 }

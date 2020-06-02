@@ -39,8 +39,9 @@
       </div>
     </div>
   </form>
+  {{ customerFormGroup.value | json}}
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="pb-4">
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial> {{ action }} </button>
+  <button mat-button (click)="onAction()" cdkFocusInitial> {{ action }} </button>
 </mat-dialog-actions>
