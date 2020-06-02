@@ -81,24 +81,38 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   create(object: any) {
     this.dataTableService.create(this.path, object).subscribe(() => {
-      this.success('Added!');
+      this.successMessage('Added!');
     });
   }
 
   update(object: any) {
     this.dataTableService.update(this.path, object, object.id).subscribe(() => {
-      this.success('Updated!');
+      this.successMessage('Updated!');
     });
   }
 
   onDelete(object: any) {
     this.dataTableService.delete(this.path, object, object.id).subscribe(() => {
-      this.success('Deleted!');
+      this.deleteMessage('Deleted!', object);
     });
   }
 
-  success(text: string) {
+  undo(object: any) {
+    this.dataTableService.undo(this.path, object, object.id).subscribe(() => {
+      this.loadPage();
+    });
+  }
+
+  successMessage(text: string) {
     this.snackBar.open(text, 'OK', { duration: 10000 });
+    this.loadPage();
+  }
+
+  deleteMessage(text: string, object: object) {
+    this.snackBar.open(text, 'UNDO', { duration: 10000 })
+      .onAction().subscribe(() => {
+        return this.undo(object);
+      });
     this.loadPage();
   }
 

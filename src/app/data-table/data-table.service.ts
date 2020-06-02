@@ -28,19 +28,22 @@ export class DataTableService {
   }
 
   create(path: string, object: object): Observable<object> {
-    console.log(path);
     return this.httpClient.post(path, object)
       .pipe(catchError(error => this.handleError(error)));
   }
 
   update(path: string, object: object, id: number): Observable<object> {
-    console.log(`${path}/${id}`);
     return this.httpClient.put(`${path}/${id}`, object)
       .pipe(catchError(error => this.handleError(error)));
   }
 
   delete(path: string, object: object, id: number): Observable<object> {
     return this.httpClient.put(`${path}/delete/${id}`, object)
+      .pipe(catchError(error => this.handleError(error)));
+  }
+
+  undo(path: string, object: object, id: number): Observable<object> {
+    return this.httpClient.put(`${path}/undoDelete/${id}`, object)
       .pipe(catchError(error => this.handleError(error)));
   }
 
