@@ -8,6 +8,6 @@ export class Invoice extends Base {
   amount: number;
   customer: Customer;
   employee: Employee;
-  paymentMethod: Payment;
+  payment: Payment;
   details: InvoiceDetail[];
 }

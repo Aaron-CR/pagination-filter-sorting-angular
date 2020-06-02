@@ -32,17 +32,24 @@ export class InvoiceFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buildForm();
+    this.setAction();
+  }
+
+  buildForm() {
     this.invoiceFormGroup = this.formBuilder.group({
+      id: [this.localData.id, [Validators.required]],
+      employee: [this.localData.employee, [Validators.required]],
       customer: [this.localData.customer, [Validators.required]],
-      paymentMethod: [this.localData.paymentMethod, [Validators.required]],
+      payment: [this.localData.payment, [Validators.required]],
       details: this.formBuilder.array([this.buildDetail()])
     });
   }
 
   // TODO: FIX
-  setDetails(details: InvoiceDetail[]) {
-    if (details) {
-      details.forEach(detail =>
+  setDetails(detailss: InvoiceDetail[]) {
+    if (detailss) {
+      detailss.forEach(detail =>
         this.details.push(this.setDetail(detail))
       );
     }

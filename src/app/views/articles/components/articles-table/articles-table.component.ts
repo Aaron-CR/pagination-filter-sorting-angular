@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { ArticleDetailComponent } from '../article-detail/article-detail.component';
 
@@ -17,7 +16,7 @@ export class ArticlesTableComponent implements OnInit {
   public title = 'Articles';
   public icon = 'storefront';
 
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

@@ -110,9 +110,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   deleteMessage(text: string, object: object) {
     this.snackBar.open(text, 'UNDO', { duration: 10000 })
-      .onAction().subscribe(() => {
-        return this.undo(object);
-      });
+      .onAction().subscribe(() => this.undo(object));
     this.loadPage();
   }
 
