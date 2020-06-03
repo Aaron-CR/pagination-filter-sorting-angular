@@ -5,7 +5,7 @@ import { Employee } from './employee';
 import { Base } from './base';
 
 export class Invoice extends Base {
-  amount: number;
+  totalAmount: number;
   customer: Customer;
   employee: Employee;
   payment: Payment;

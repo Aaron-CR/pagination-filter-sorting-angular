@@ -12,7 +12,7 @@ export class InvoicesTableComponent implements OnInit {
   public path = 'http://localhost:8080/api/v1/invoice';
   public formDialog = InvoiceFormComponent;
   public detailDialog = InvoiceDetailComponent;
-  public displayedColumns: string[] = ['date', 'amount', 'paymentMethod', 'invoice'];
+  public displayedColumns: string[] = ['id', 'createdAt', 'customer', 'employee', 'totalAmount', 'payment'];
   public icon = 'receipt';
   public title = 'Invoices';
 
