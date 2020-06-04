@@ -48,7 +48,7 @@
           <mat-cell *matCellDef="let row"> {{ column.cell(row) | date:'dd-MM-yyyy' }} </mat-cell>
         </ng-container>
         <!-- SwitchCase category -->
-        <ng-container *ngSwitchCase="column.columnDef === 'category'">
+        <ng-container *ngSwitchCase="column.columnDef === 'category' || column.columnDef === 'payment'">
           <mat-header-cell mat-sort-header *matHeaderCellDef> {{ column.header }} </mat-header-cell>
           <mat-cell *matCellDef="let row">
             <!-- <span class="status-chip" [class]="getClass(row)"> {{ row[def] }} </span> -->

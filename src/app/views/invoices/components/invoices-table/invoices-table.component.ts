@@ -18,7 +18,9 @@ export class InvoicesTableComponent implements OnInit {
     { columnDef: 'createdAt',     header: 'Created at',   cell: (invoice: Invoice) => `${invoice.createdAt}`     },
     { columnDef: 'customer',   header: 'Customer',
     cell: (invoice: Invoice) => `${invoice.customer.firstName} ${invoice.customer.lastName}`},
-    { columnDef: 'totalAmount',   header: 'Amount', cell: (invoice: Invoice) => `$ ${invoice.totalAmount}`   },
+    { columnDef: 'employee',   header: 'Employee',
+    cell: (invoice: Invoice) => `${invoice.employee.firstName} ${invoice.employee.lastName}`},
+    { columnDef: 'totalAmount',   header: 'Amount', cell: (invoice: Invoice) => `${invoice.totalAmount}`   },
     { columnDef: 'payment',   header: 'Payment Method',
     cell: (invoice: Invoice) => `${invoice.payment.name}`}
   ];

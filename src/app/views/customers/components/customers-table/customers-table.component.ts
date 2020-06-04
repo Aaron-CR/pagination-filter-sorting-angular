@@ -13,7 +13,6 @@ export class CustomersTableComponent implements OnInit {
   public path = 'http://localhost:8080/api/v1/customer';
   public formDialog = CustomerFormComponent;
   public detailDialog = CustomerDetailComponent;
-  // public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'fein'];
   public tableColumns = [
     { columnDef: 'id', header: 'No.',    cell: (customer: Customer) => `${customer.id}` },
     { columnDef: 'firstName', header: 'Name',    cell: (customer: Customer) => `${customer.firstName} ${customer.lastName}` },
