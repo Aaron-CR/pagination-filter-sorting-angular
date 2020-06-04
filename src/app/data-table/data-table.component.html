@@ -31,34 +31,34 @@
 
     <mat-table matSort matSortDisableClear="true" [dataSource]="dataSource">
 
-      <ng-container *ngFor="let def of displayedColumns" [matColumnDef]="def" [ngSwitch]="true">
+      <ng-container *ngFor="let column of tableColumns" [matColumnDef]="column.columnDef" [ngSwitch]="true">
         <!-- SwitchCase number -->
-        <ng-container *ngSwitchCase="def === 'stockUnits' || def === 'fein' || def === 'id'">
-          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | splitCamelCase }} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row[def] | number }} </mat-cell>
+        <ng-container *ngSwitchCase="column.columnDef === 'stockUnits' || column.columnDef === 'fein' || column.columnDef === 'id'">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ column.header }} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ column.cell(row) | number }} </mat-cell>
         </ng-container>
         <!-- SwitchCase currency -->
-        <ng-container *ngSwitchCase="def === 'price' || def === 'unitPrice' || def === 'totalAmount'">
-          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | splitCamelCase }} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row[def] | currency }} </mat-cell>
+        <ng-container *ngSwitchCase="column.columnDef ==='price' || column.columnDef === 'unitPrice' || column.columnDef === 'totalAmount'">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ column.header }} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ column.cell(row) | currency }} </mat-cell>
         </ng-container>
         <!-- SwitchCase date -->
-        <ng-container *ngSwitchCase="def === 'createdAt'">
-          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | splitCamelCase }} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row[def] | date:'dd-MM-yyyy' }} </mat-cell>
+        <ng-container *ngSwitchCase="column.columnDef === 'createdAt'">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ column.header }} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ column.cell(row) | date:'dd-MM-yyyy' }} </mat-cell>
         </ng-container>
         <!-- SwitchCase category -->
-        <ng-container *ngSwitchCase="def === 'category'">
-          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | splitCamelCase }} </mat-header-cell>
+        <ng-container *ngSwitchCase="column.columnDef === 'category'">
+          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ column.header }} </mat-header-cell>
           <mat-cell *matCellDef="let row">
             <!-- <span class="status-chip" [class]="getClass(row)"> {{ row[def] }} </span> -->
-            <span class="status-chip"> {{ row[def] }} </span>
+            <span class="status-chip"> {{ column.cell(row) }} </span>
           </mat-cell>
         </ng-container>
         <!-- SwitchCase default -->
         <ng-container *ngSwitchDefault>
-          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ def | splitCamelCase }} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row[def]}} </mat-cell>
+          <mat-header-cell mat-sort-header *matHeaderCellDef> {{ column.header }} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{column.cell(row)}} </mat-cell>
         </ng-container>
       </ng-container>
 

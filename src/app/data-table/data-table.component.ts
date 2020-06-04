@@ -22,6 +22,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() title = 'Table';
   @Input() icon = 'table_chart';
   @Input() createAction = true;
+  @Input() tableColumns: any[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
