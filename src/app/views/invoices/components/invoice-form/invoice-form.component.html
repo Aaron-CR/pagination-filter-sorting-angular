@@ -57,7 +57,7 @@
             <div class="col-md-4" [matTooltip]="details.valid ? 'Add another article detail' : 'Disabled until the existing detail data is
               valid'">
               <button mat-flat-button color="primary" [disabled]="!details.valid" (click)="addDetail()">
-                Add Another Article
+                {{ details.length !== 0 ? 'Add Another Article' : 'Add Article' }}
               </button>
             </div>
           </div>

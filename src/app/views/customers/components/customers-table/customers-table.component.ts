@@ -14,11 +14,11 @@ export class CustomersTableComponent implements OnInit {
   public formDialog = CustomerFormComponent;
   public detailDialog = CustomerDetailComponent;
   public tableColumns = [
-    { columnDef: 'id', header: 'No.',    cell: (customer: Customer) => `${customer.id}` },
-    { columnDef: 'firstName', header: 'Name',    cell: (customer: Customer) => `${customer.firstName} ${customer.lastName}` },
-    { columnDef: 'email', header: 'E-mail',    cell: (customer: Customer) => `${customer.email}` },
-    { columnDef: 'phone', header: 'Phone number',    cell: (customer: Customer) => `${customer.phone}` },
-    { columnDef: 'fein', header: 'Fein number',    cell: (customer: Customer) => `${customer.fein}` },
+    { columnDef: 'id', header: 'No.', cell: (customer: Customer) => `${customer.id}` },
+    { columnDef: 'firstName', header: 'Name', cell: (customer: Customer) => `${customer.firstName} ${customer.lastName}` },
+    { columnDef: 'email', header: 'E-mail', cell: (customer: Customer) => `${customer.email}` },
+    { columnDef: 'phone', header: 'Phone number', cell: (customer: Customer) => `${customer.phone}` },
+    { columnDef: 'fein', header: 'Fein number', cell: (customer: Customer) => `${customer.fein}` },
   ];
 
   public displayedColumns = this.tableColumns.map(c => c.columnDef);

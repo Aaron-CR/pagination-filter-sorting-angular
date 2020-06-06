@@ -14,10 +14,10 @@ export class ArticlesTableComponent implements OnInit {
   public formDialog = ArticleFormComponent;
   public detailDialog = ArticleDetailComponent;
   public tableColumns = [
-    { columnDef: 'id', header: 'No.',    cell: (article: Article) => `${article.id}` },
-    { columnDef: 'category', header: 'Category',    cell: (article: Article) => `${article.category}` },
-    { columnDef: 'stockUnits', header: 'Stock units',    cell: (article: Article) => `${article.stockUnits}` },
-    { columnDef: 'unitPrice', header: 'Unit price',    cell: (article: Article) => `${article.unitPrice}` },
+    { columnDef: 'id', header: 'No.', cell: (article: Article) => `${article.id}` },
+    { columnDef: 'category', header: 'Category', cell: (article: Article) => `${article.category}` },
+    { columnDef: 'stockUnits', header: 'Stock units', cell: (article: Article) => `${article.stockUnits}` },
+    { columnDef: 'unitPrice', header: 'Unit price', cell: (article: Article) => `${article.unitPrice}` },
   ];
   public displayedColumns = this.tableColumns.map(c => c.columnDef);
   public title = 'Articles';
