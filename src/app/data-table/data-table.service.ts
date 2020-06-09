@@ -38,7 +38,7 @@ export class DataTableService {
   }
 
   delete(path: string, object: object, id: number): Observable<object> {
-    return this.httpClient.put(`${path}/delete/${id}`, object)
+    return this.httpClient.delete(`${path}/${id}`, object)
       .pipe(catchError(error => this.handleError(error)));
   }
 
