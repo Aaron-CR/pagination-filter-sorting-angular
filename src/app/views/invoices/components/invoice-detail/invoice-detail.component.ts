@@ -11,6 +11,8 @@ export class InvoiceDetailComponent implements OnInit {
 
   public localData: Invoice;
 
+  public displayedColumns = ['article', 'quantity', 'amount'];
+
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Invoice,
     public dialogRef: MatDialogRef<InvoiceDetailComponent>,

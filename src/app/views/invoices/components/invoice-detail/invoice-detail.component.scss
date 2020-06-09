@@ -1,0 +1,51 @@
+.header-titles {
+  font-size: 16px;
+  text-transform: uppercase;
+  color: grey;
+
+}
+
+.header-names {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 28px;
+}
+
+.element-cod {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+table {
+  width: 100%;
+}
+
+.article-name{
+  flex: 0 0 25% !important;
+  min-width: 200px !important;
+}
+
+.table-row {
+  height: 30px !important;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.detail-table {
+  border-radius: 0px 0px 30px 30px;
+  border: 1px solid #8d8d8d;
+  padding: 10px 0px;
+  text-align: center;
+}
+
+.detail-header {
+  border-radius: 30px 30px 0px 0px;
+  background-color: #8d8d8d;
+  border: 1px solid #8d8d8d;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 10px 0px;
+  text-align: center;
+}
