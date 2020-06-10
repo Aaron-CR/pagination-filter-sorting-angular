@@ -1,72 +1,93 @@
 <div mat-dialog-title class="d-flex justify-content-between align-items-center app-dialog-title">
   <span> Invoice N° {{ localData.id | number }} </span>
-  <button mat-button mat-icon-button (click)="onCancel()">
-    <mat-icon> close </mat-icon>
-  </button>
+  <div class="d-flex align-items-center">
+    <button mat-raised-button color="primary" class="mr-3" (click)="downloadInvoice()">
+      <mat-icon [inline]="true">save_alt</mat-icon> Download PDF
+    </button>
+    <button mat-button mat-icon-button (click)="onCancel()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </div>
 </div>
-<mat-dialog-content class="app-content">
-  <div class="container">
-    <div class="row">
-      <div class="col border-right mr-2">
-        <div class="row header-titles">CUSTOMER</div>
-        <div class="row element-cod"> Cod. {{localData.customer.id}} </div>
-        <div class="row header-names">
-          {{localData.customer.firstName | titlecase}} {{localData.customer.lastName | titlecase}}
+<mat-dialog-content class="m-4">
+  <div class="mat-elevation-z8">
+    <div id="invoice" class="app-card">
+      <div class="header">
+        <div class="invoice-date"> {{ localData.createdAt | date:'short' }} </div>
+        <div class="d-flex">
+          <div class="customer flex-fill">
+            <div class="invoice-number">
+              <span class="title">INVOICE N° </span>
+              <span class="number strong"> {{ localData.id | number }} </span>
+            </div>
+            <div class="info">
+              <div class="title">
+                {{ localData.customer.firstName | titlecase }}
+                {{ localData.customer.lastName | titlecase }}
+              </div>
+              <div class="address"> Cod. {{ localData.customer.id }} </div>
+              <div class="phone"> {{ localData.customer.phone }} </div>
+              <div class="email"> {{ localData.customer.email }} </div>
+            </div>
+          </div>
+          <div class="issuer accent flex-fill">
+            <div class="d-flex">
+              <div class="logo">
+                <img src="assets/images/logos/angular.png">
+              </div>
+              <div class="info flex-fill">
+                <div class="title">CRUD DEMO.</div>
+                <div class="address">
+                  {{ localData.employee.firstName | titlecase }}
+                  {{ localData.employee.lastName | titlecase }}
+                </div>
+                <div class="website">FEIN {{ localData.employee.fein }} </div>
+                <div class="email">Cod. {{ localData.employee.id }} </div>
+                <div class="phone"> {{ localData.employee.phone }} </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col">
-        <div class="row header-titles">EMPLOYEE</div>
-        <div class="row element-cod"> Cod. {{localData.employee.id}} </div>
-        <div class="row header-names">
-          {{localData.employee.firstName | titlecase}} {{localData.employee.lastName | titlecase}}
-        </div>
+      <div class="pt-5">
+        <mat-table [dataSource]="localData.details">
+          <!-- Article Column -->
+          <ng-container matColumnDef="article">
+            <mat-header-cell *matHeaderCellDef> ARTICLE </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.article.name }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+          </ng-container>
+
+          <!-- Quantity Column -->
+          <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef> QUANTITY </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.quantity | number }} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+          <!-- Amount Column -->
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef> AMOUNT </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.amount | currency}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef> {{ localData.totalAmount | currency}} </mat-footer-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+        </mat-table>
       </div>
-      <div class="col">
-        <div>
-          <div class="detail-header">Date</div>
-          <div class="detail-table">{{localData.createdAt | date:'dd-MM-yyyy'}}</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-4">
-      <table mat-table [dataSource]="localData.details" class="border">
-
-        <ng-container matColumnDef="article">
-          <th mat-header-cell *matHeaderCellDef class="article-name"> Article </th>
-          <td mat-cell *matCellDef="let row" class="article-name"> {{row.article.name}} </td>
-          <td mat-footer-cell *matFooterCellDef class="article-name"> </td>
-        </ng-container>
-
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef> Quantity </th>
-          <td mat-cell *matCellDef="let row"> {{row.quantity}} </td>
-          <td mat-footer-cell *matFooterCellDef> Total </td>
-        </ng-container>
-
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef> Amount </th>
-          <td mat-cell *matCellDef="let row"> {{row.amount | currency}} </td>
-          <td mat-footer-cell *matFooterCellDef> {{localData.totalAmount | currency}}
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: false" class="table-row"></tr>
-      </table>
-    </div>
-
-    <div class="row mt-3">
-      <div class="col">
-        <div>
-          <div class="detail-header">Payment Method</div>
-          <div class="detail-table">{{localData.payment.name}}</div>
-        </div>
-      </div>
-      <div class="col">
-        <div>
-          <div class="detail-header">Total Amount</div>
-          <div class="detail-table">{{localData.totalAmount | currency}}</div>
+      <div class="footer pt-5">
+        <div class="mb-4">Thank you for your business.</div>
+        <div
+          style="flex-direction: row; box-sizing: border-box; display: flex; place-content: flex-start; align-items: flex-start;">
+          <div class="logo"><img src="assets/images/logos/angular.png"></div>
+          <div class="ml-4">
+            In condimentum malesuada efficitur. Mauris volutpat placerat auctor. Ut ac congue dolor. Quisque scelerisque
+            lacus sed feugiat fermentum. Cras aliquet facilisis pellentesque. Nunc hendrerit quam at leo commodo, a
+            suscipit tellus dapibus. Etiam at felis volutpat est mollis lacinia. Mauris placerat sem sit amet velit
+            mollis, in porttitor ex finibus.
+          </div>
         </div>
       </div>
     </div>

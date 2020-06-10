@@ -120,7 +120,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       panelClass: 'app-dialog',
       disableClose: true,
       data: object,
-      width: '50%',
+      width: '65%',
     });
   }
 
