@@ -10,13 +10,12 @@
     </div>
     <div class="row d-flex align-items-center">
       <!-- Search -->
-      <mat-form-field appearance="none" class="app-form-field ml-3">
-        <mat-label>Search</mat-label>
+      <div class="app-search ml-3">
         <input matInput placeholder="Search..." #input>
         <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+      </div>
       <!-- Button -->
-      <button mat-raised-button color="primary" class="ml-3" *ngIf="createAction" (click)="onSubmit({})">
+      <button mat-flat-button color="primary" class="ml-3" *ngIf="createAction" (click)="onSubmit({})">
         <mat-icon [inline]="true">add</mat-icon> Add new
       </button>
     </div>

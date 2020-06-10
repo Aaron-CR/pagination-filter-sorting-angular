@@ -16,11 +16,13 @@ h1 {
   margin: 0px;
 }
 
-.app-form-field {
+.app-search {
+  display: flex;
+  flex-direction: row;
   border-width: 1px;
   border-style: solid;
   border-color: lightgrey;
-  padding: 0 25px;
+  padding: 6px 25px;
   border-radius: 25px;
 }
 
@@ -50,11 +52,10 @@ h1 {
 }
 
 /* BUTTON */
-.mat-raised-button {
-  height: 42px;
+.mat-flat-button {
   padding: 0 30px;
   border-radius: 25px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .app-menu-icon {
