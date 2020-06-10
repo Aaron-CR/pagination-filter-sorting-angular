@@ -48,14 +48,18 @@ export class InvoiceFormComponent implements OnInit {
   }
 
   setDetails() {
-    this.localData.details.forEach(detail => {
-      this.details.push(this.formBuilder.group(detail));
-    });
+    if (this.localData.details) {
+      this.localData.details.forEach(detail => {
+        return this.details.push(this.formBuilder.group(detail));
+      });
+    } else {
+      this.details.push(this.buildDetail());
+    }
   }
 
   buildDetail() {
     return this.formBuilder.group({
-      article: ['', Validators.required],
+      article: [{}, Validators.required],
       quantity: ['', Validators.required],
     });
   }
