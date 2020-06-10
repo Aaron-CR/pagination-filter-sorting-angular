@@ -22,6 +22,13 @@ export class DataTableService {
     }).pipe(catchError(error => this.handleError(error)));
   }
 
+  getAll(path: string, filter = ''): Observable<object> {
+    return this.httpClient.get(`${path}/all`, {
+      params: new HttpParams()
+        .set('filter', filter)
+    }).pipe(catchError(error => this.handleError(error)));
+  }
+
   findById(path: string, id: number): Observable<object> {
     return this.httpClient.get(`${path}/${id}`)
       .pipe(catchError(error => this.handleError(error)));
