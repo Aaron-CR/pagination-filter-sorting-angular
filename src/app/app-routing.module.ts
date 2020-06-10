@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'index', loadChildren: () => import('./views/index/index.module').then(m => m.IndexModule) },
   { path: 'articles', loadChildren: () => import('./views/articles/articles.module').then(m => m.ArticlesModule) },
   { path: 'customers', loadChildren: () => import('./views/customers/customers.module').then(m => m.CustomersModule) },
+  { path: 'employees', loadChildren: () => import('./views/employees/employees.module').then(m => m.EmployeesModule) },
   { path: 'invoices', loadChildren: () => import('./views/invoices/invoices.module').then(m => m.InvoicesModule) },
   { path: 'not-found', loadChildren: () => import('./views/not-found/not-found.module').then(m => m.NotFoundModule) },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
