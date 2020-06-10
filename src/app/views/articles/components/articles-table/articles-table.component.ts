@@ -14,7 +14,7 @@ export class ArticlesTableComponent implements OnInit {
   public formDialog = ArticleFormComponent;
   public detailDialog = ArticleDetailComponent;
   public tableColumns = [
-    { columnDef: 'id', header: 'No.', cell: (article: Article) => `${article.id}` },
+    { columnDef: 'name', header: 'Name', cell: (article: Article) => `${article.name}` },
     { columnDef: 'category', header: 'Category', cell: (article: Article) => `${article.category}` },
     { columnDef: 'stockUnits', header: 'Stock units', cell: (article: Article) => `${article.stockUnits}` },
     { columnDef: 'unitPrice', header: 'Unit price', cell: (article: Article) => `${article.unitPrice}` },

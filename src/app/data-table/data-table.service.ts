@@ -11,7 +11,7 @@ export class DataTableService {
 
   constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) { }
 
-  findAll(path: string, filter = '', page = 0, size = 8, sortBy = '', direction = 'desc'): Observable<object> {
+  findAll(path: string, filter = '', page = 0, size = 8, sortBy = 'updatedAt', direction = 'desc'): Observable<object> {
     return this.httpClient.get(path, {
       params: new HttpParams()
         .set('filter', filter)
