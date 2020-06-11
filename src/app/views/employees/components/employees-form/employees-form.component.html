@@ -1,0 +1,41 @@
+<div mat-dialog-title class="d-flex justify-content-between align-items-center app-dialog-title">
+    <span> {{ action }} Employee </span>
+    <button mat-button mat-icon-button (click)="onCancel()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="app-content">
+    <form [formGroup]="customerFormGroup" novalidate>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="pb-3 w-100">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="Please enter a first name." formControlName="firstName" required>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="pb-3 w-100">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Please enter a last name." formControlName="lastName" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field class="pb-3 w-100">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Please enter a email." formControlName="email" required>
+      </mat-form-field>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="pb-3 w-100">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Please enter a phone number." formControlName="phone" required>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    {{ customerFormGroup.value | json}}
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="pb-4">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onAction()" cdkFocusInitial> {{ action }} </button>
+  </mat-dialog-actions>
