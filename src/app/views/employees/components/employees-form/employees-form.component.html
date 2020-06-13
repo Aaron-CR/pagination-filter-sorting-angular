@@ -32,6 +32,17 @@
           </mat-form-field>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="pb-3 w-100">
+            <mat-label>Cargo</mat-label>
+            <mat-select formControlName="shift" [(value)]="localData.shift">
+              <mat-option value="Cajero">Cajero</mat-option>
+              <mat-option value="Cocinero">Cocinero</mat-option>
+            </mat-select>          
+          </mat-form-field>
+        </div>
+      </div>
     </form>
     {{ customerFormGroup.value | json}}
   </mat-dialog-content>

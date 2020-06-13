@@ -2,6 +2,8 @@ import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { Employee } from 'src/app/core/models/employee';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-employees-form',
@@ -13,11 +15,13 @@ export class EmployeesFormComponent implements OnInit {
   public localData: Employee;
   public action: string;
   public customerFormGroup: FormGroup;
+  public result: boolean = false;
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Employee,
     public dialogRef: MatDialogRef<EmployeesFormComponent>,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {
     this.localData = { ...data };
   }
@@ -43,7 +47,22 @@ export class EmployeesFormComponent implements OnInit {
   }
 
   onAction() {
-    this.dialogRef.close({ event: this.action, data: this.customerFormGroup.value });
+    const message = `Are you sure you want to do this?`;
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+
+      if(this.result){
+        this.dialogRef.close({ event: this.action, data: this.customerFormGroup.value });
+      }
+    });
   }
 
   onCancel() {
@@ -53,5 +72,4 @@ export class EmployeesFormComponent implements OnInit {
   errorHandling = (control: string, error: string) => {
     return this.customerFormGroup.controls[control].hasError(error);
   }
-
 }

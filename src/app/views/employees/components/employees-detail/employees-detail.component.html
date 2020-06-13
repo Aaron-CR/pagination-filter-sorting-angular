@@ -1,5 +1,5 @@
 <div mat-dialog-title class="d-flex justify-content-between align-items-center app-dialog-title">
-    <span> Employee details </span>
+    <span> Employee Details </span>
     <button mat-button mat-icon-button (click)="onCancel()">
       <mat-icon> close </mat-icon>
     </button>
@@ -8,25 +8,28 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="container">
-            <div class="row article-cod">Name</div>
-            <div class="row dialog-header">
-              {{localData.firstName | titlecase}} {{localData.lastName | titlecase}}
-            </div>
-            <div class="row">
-              <div class="element-badge">{{localData.email}}</div>
-            </div>
+          <div class="d-flex align-items-center">
+            <button mat-mini-fab disabled class="mr-3">
+              <mat-icon>{{ icon }}</mat-icon>
+            </button>
+            <h3 class="row article-cod" style="font-size: 27px;">Employee</h3>
           </div>
         </div>
         <div class="col">
           <div class="float-right button-col">
             <button mat-raised-button color="primary" class="ml-3">
-              <span>Update</span>
+              <span>Deshabilitar Cuenta</span>
             </button>
           </div>
         </div>
       </div>
       <div class="row mt-3">
+        <div class="col">
+          <div>
+            <div class="detail-header">Name</div>
+            <div class="detail-table">{{localData.firstName}} {{localData.lastName}}</div>
+          </div>
+        </div>
         <div class="col">
           <div>
             <div class="detail-header">Email</div>
@@ -37,25 +40,6 @@
           <div>
             <div class="detail-header">Phone</div>
             <div class="detail-table">{{localData.phone}}</div>
-          </div>
-        </div>
-        <div class="col">
-          <div>
-            <div class="detail-header">Shift</div>
-            <div class="detail-table">{{localData.shift}}</div>
-          </div>
-        </div>
-        <div class="col">
-          <div>
-            <div class="detail-header">Created at</div>
-            <div class="detail-table">{{localData.createdAt | date:'dd-MM-yyyy'}}</div>
-          </div>
-        </div>
-        <div class="col">
-          <div>
-            <div class="detail-header">Updated at</div>
-            <div class="detail-table">{{localData.updatedAt == null ? "-" : localData.updatedAt | date:'dd-MM-yyyy'}}
-            </div>
           </div>
         </div>
       </div>

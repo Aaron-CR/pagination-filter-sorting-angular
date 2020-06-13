@@ -11,6 +11,7 @@ export class EmployeesDetailComponent implements OnInit {
 
   public localData: Employee;
   public name: string;
+  public icon = 'people_alt';
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Employee,

@@ -7,6 +7,8 @@ import { TableDataSource } from './data-table.datasource';
 import { DataTableService } from './data-table.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent, ConfirmDialogModel } from '../shared/components/confirm-dialog/confirm-dialog.component';
+
 
 @Component({
   selector: 'app-data-table',
@@ -23,6 +25,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() icon = 'table_chart';
   @Input() createAction = true;
   @Input() tableColumns: any[];
+  public result: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -93,9 +96,25 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(object: any) {
-    this.dataTableService.delete(this.path, object, object.id).subscribe(() => {
-      this.deleteMessage('Deleted!', object);
+
+    const message = `Are you sure you want to do this?`;
+
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
     });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      this.result = dialogResult;
+
+      if(this.result){
+        this.dataTableService.delete(this.path, object, object.id).subscribe(() => {
+          this.deleteMessage('Deleted!', object);
+        });
+      }
+    });    
   }
 
   undo(object: any) {

@@ -17,7 +17,7 @@ export class EmployeesTableComponent implements OnInit {
     { columnDef: 'firstName', header: 'Name', cell: (employee: Employee) => `${employee.firstName} ${employee.lastName}` },
     { columnDef: 'email', header: 'E-mail', cell: (employee: Employee) => `${employee.email}` },
     { columnDef: 'phone', header: 'Phone', cell: (employee: Employee) => `${employee.phone}` },
-    { columnDef: 'shift', header: 'Shift', cell: (employee: Employee) => `${employee.shift}` }
+    { columnDef: 'cargo', header: 'Cargo', cell: (employee: Employee) => `${employee.shift}` }
   ]
 
   public displayedColumns = this.tableColumns.map(c => c.columnDef);
