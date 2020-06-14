@@ -30,6 +30,8 @@ export class ArticleFormComponent implements OnInit {
   buildForm() {
     this.articleFormGroup = this.formBuilder.group({
       id: [this.localData.id, Validators.required],
+      createdAt: [this.localData.createdAt],
+      updatedAt: [this.localData.updatedAt],
       name: [this.localData.name, Validators.required],
       category: [this.localData.category, Validators.required],
       unitPrice: [this.localData.unitPrice, Validators.required],

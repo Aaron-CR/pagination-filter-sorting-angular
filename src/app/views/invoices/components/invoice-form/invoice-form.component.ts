@@ -39,6 +39,8 @@ export class InvoiceFormComponent implements OnInit {
   buildForm() {
     this.invoiceFormGroup = this.formBuilder.group({
       id: [this.localData.id, [Validators.required]],
+      createdAt: [this.localData.createdAt],
+      updatedAt: [this.localData.updatedAt],
       employee: [this.localData.employee, [Validators.required]],
       customer: [this.localData.customer, [Validators.required]],
       payment: [this.localData.payment, [Validators.required]],
