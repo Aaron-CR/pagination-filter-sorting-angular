@@ -9,18 +9,30 @@
     <mat-step [stepControl]="invoiceFormGroup">
       <ng-template matStepLabel>Basic Info</ng-template>
       <form novalidate [formGroup]="invoiceFormGroup">
+
         <mat-form-field class="pb-3 w-100">
-          <mat-label>Customer</mat-label>
-          <input matInput placeholder="Please enter a customer." formControlName="customer" required>
+          <input matInput placeholder="Please enter a customer." [matAutocomplete]="auto" formControlName="customer">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngIf="isLoading">Loading...</mat-option>
+            <!-- <mat-option *ngIf="filteredCustomers.length === 0">No customer found...</mat-option> -->
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let customer of filteredCustomers" [value]="customer">
+                <span>{{customer.firstName}} {{customer.lastName}}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
+
         <mat-form-field class="pb-3 w-100">
           <mat-label>Employee</mat-label>
           <input matInput placeholder="Please enter a employee." formControlName="employee" required>
         </mat-form-field>
+
         <mat-form-field class="pb-3 w-100">
           <mat-label>Payment Method</mat-label>
           <input matInput placeholder="Please enter a payment method." formControlName="payment" required>
         </mat-form-field>
+
       </form>
       <div>
         <button mat-button matStepperNext>Next</button>

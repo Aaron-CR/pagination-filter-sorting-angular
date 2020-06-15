@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Invoice } from 'src/app/core/models/invoice';
 import { InvoiceDetail } from 'src/app/core/models/invoice-detail';
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { Customer } from 'src/app/core/models/customer';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-invoice-form',
@@ -14,6 +17,9 @@ export class InvoiceFormComponent implements OnInit {
   public localData: Invoice;
   public action: string;
   public invoiceFormGroup: FormGroup;
+  public filteredCustomers: any = [];
+  public isLoading = false;
+  public errorMsg: string;
 
   get details(): FormArray {
     return this.invoiceFormGroup.get('details') as FormArray;
@@ -26,7 +32,8 @@ export class InvoiceFormComponent implements OnInit {
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Invoice,
     public dialogRef: MatDialogRef<InvoiceFormComponent>,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private http: HttpClient
   ) {
     this.localData = { ...data };
   }
@@ -34,6 +41,54 @@ export class InvoiceFormComponent implements OnInit {
   ngOnInit() {
     this.setAction();
     this.buildForm();
+    this.filterCustomer();
+  }
+
+  filterCustomer() {
+    this.invoiceFormGroup.get('customer').valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.errorMsg = '';
+          this.filteredCustomers = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => {
+          if (typeof value === 'string') {
+            return this.http.get('http://localhost:8080/api/v1/customer/all?filter=' + value)
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false;
+                }));
+          } else {
+            return this.http.get('http://localhost:8080/api/v1/customer/all')
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false;
+                }));
+          }
+        }
+        )
+      )
+      .subscribe(data => {
+        if (data === undefined) {
+          this.errorMsg = 'Error';
+          this.filteredCustomers = [];
+        } else {
+          this.errorMsg = '';
+          this.filteredCustomers = data;
+        }
+        console.log(this.filteredCustomers);
+      });
+  }
+
+  // Este método muestra el valor cuando se selecciona una opción, sino sale [object Object]
+  displayFn(object: Customer) {
+    if (object) {
+      return object.firstName + ' ' + object.lastName;
+    } else {
+      return '';
+    }
   }
 
   buildForm() {
