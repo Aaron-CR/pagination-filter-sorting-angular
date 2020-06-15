@@ -1,4 +1,4 @@
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
@@ -10,14 +10,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class ConfirmDialogComponent implements OnInit {
 
   title: string;
-  message: string;
+  message: string = `Are you sure you want to do this?`;
+  result: string = '';
+  dialogData = new ConfirmDialogModel("Confirm Action", this.message);
 
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel, public dialog: MatDialog) {
     // Update view with given values
     this.title = data.title;
     this.message = data.message;
-    
   }
 
   ngOnInit() {

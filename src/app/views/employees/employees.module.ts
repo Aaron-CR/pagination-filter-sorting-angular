@@ -8,7 +8,7 @@ import { EmployeesFormComponent } from './components/employees-form/employees-fo
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { DataTableModule } from 'src/app/data-table/data-table.module';
-
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { DataTableModule } from 'src/app/data-table/data-table.module';
     SharedModule,
     MaterialModule,
     DataTableModule
-  ]
+  ],
+  providers: [ConfirmDialogComponent]
 })
 export class EmployeesModule { }
