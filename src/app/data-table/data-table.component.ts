@@ -118,7 +118,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   onRead(object: any): void {
     this.dialog.open(this.detailDialog, {
       panelClass: 'app-dialog',
-      disableClose: true,
       data: object,
       width: '65%',
     });

@@ -6,11 +6,13 @@
 </div>
 <mat-dialog-content class="app-content">
   <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <!-- First Step Start -->
     <mat-step [stepControl]="invoiceFormGroup">
       <ng-template matStepLabel>Basic Info</ng-template>
+      <!-- Invoice Form Start -->
       <form novalidate [formGroup]="invoiceFormGroup">
-
-        <mat-form-field class="pb-3 w-100">
+        <!-- Customer Autocomplete -->
+        <mat-form-field class="w-100">
           <input matInput placeholder="Please enter a customer." [matAutocomplete]="autoCustomer"
             formControlName="customer">
           <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="displayCustomer">
@@ -22,8 +24,8 @@
             </ng-container>
           </mat-autocomplete>
         </mat-form-field>
-
-        <mat-form-field class="pb-3 w-100">
+        <!-- Employee Autocomplete -->
+        <mat-form-field class="w-100">
           <input matInput placeholder="Please enter a employee." [matAutocomplete]="autoEmployee"
             formControlName="employee">
           <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayEmployee">
@@ -35,8 +37,8 @@
             </ng-container>
           </mat-autocomplete>
         </mat-form-field>
-
-        <mat-form-field class="pb-3 w-100">
+        <!-- Payment Autocomplete -->
+        <mat-form-field class="w-100">
           <input matInput placeholder="Please enter a payment method." [matAutocomplete]="autoPayment"
             formControlName="payment">
           <mat-autocomplete #autoPayment="matAutocomplete" [displayWith]="displayPayment">
@@ -48,54 +50,64 @@
             </ng-container>
           </mat-autocomplete>
         </mat-form-field>
-
       </form>
+      <!-- Invoice Form End -->
       <div>
         <button mat-button matStepperNext>Next</button>
       </div>
     </mat-step>
+    <!-- Second Step Start -->
     <mat-step>
       <ng-template matStepLabel>Fill out the details</ng-template>
-      <form novalidate [formGroup]="invoiceFormGroup">
-        <div formArrayName="details">
-          <div [formGroupName]="i" *ngFor="let detail of details.controls; let i=index">
-            <div class="d-flex flex-fill align-items-center">
-              <div class="p-2 flex-grow-1">
-                <mat-form-field class="w-100">
-                  <mat-label>Article</mat-label>
-                  <input matInput id="{{ 'article' + i }}" placeholder="Please enter a article."
-                    formControlName="article" required>
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field class="w-100">
-                  <mat-label>Quantity</mat-label>
-                  <input matInput id="{{ 'quantity' + i }}" placeholder="Please enter a quantity."
-                    formControlName="quantity" required>
-                </mat-form-field>
-              </div>
-              <div class="p-2" [matTooltip]="requiredArticle ? 'Disabled' : 'Delete article'">
-                <button mat-button mat-icon-button [disabled]="requiredArticle" (click)="removeDetail(i)">
-                  <mat-icon [color]="requiredArticle ? '' : 'warn'">delete</mat-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="row pb-3">
-            <div class="col-md-4" [matTooltip]="details.valid ? 'Add another article detail' : 'Disabled until the existing detail data is
-              valid'">
-              <button mat-flat-button color="primary" [disabled]="!details.valid" (click)="addDetail()">
-                {{ details.length !== 0 ? 'Add Another Article' : 'Add Article' }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
+      <mat-table [dataSource]="details.value">
+        <!-- Article Column -->
+        <ng-container matColumnDef="article">
+          <mat-header-cell *matHeaderCellDef> ARTICLE </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.article.name }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+        </ng-container>
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef> QUANTITY </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.quantity | number }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <mat-header-cell *matHeaderCellDef> AMOUNT </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.amount | currency}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{ localData.totalAmount | currency}} </mat-footer-cell>
+        </ng-container>
+        <!-- Action column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> ACTIONS </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <!-- Edit Button -->
+            <button mat-button mat-icon-button matTooltip="Editar" (click)="onSubmit(row)">
+              <mat-icon color="primary"> mode_edit </mat-icon>
+            </button>
+            <!-- Delete Button -->
+            <button mat-button mat-icon-button matTooltip="Eliminar" (click)="onDelete(row)">
+              <mat-icon color="warn"> delete </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns.concat('actions')"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns.concat('actions')"></mat-row>
+      </mat-table>
+      <!-- Boton añadir -->
+      <div class="py-3 d-flex flex-row-reverse">
+        <button mat-raised-button color="primary" (click)="onSubmit({})">
+          <mat-icon [inline]="true" class="mr-2"> add </mat-icon>
+          Add detail
+        </button>
+      </div>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </mat-step>
+    <!-- Third Step Start -->
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
       <h4>Invoice Form Group</h4>

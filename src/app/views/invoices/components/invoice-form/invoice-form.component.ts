@@ -1,6 +1,6 @@
 import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Invoice } from 'src/app/core/models/invoice';
 import { InvoiceDetail } from 'src/app/core/models/invoice-detail';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { Customer } from 'src/app/core/models/customer';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from 'src/app/core/models/employee';
 import { Payment } from 'src/app/core/models/payment';
+import { DetailFormComponent } from './detail-form/detail-form.component';
 
 @Component({
   selector: 'app-invoice-form',
@@ -24,6 +25,7 @@ export class InvoiceFormComponent implements OnInit {
   public filteredPayments: any = [];
   public isLoading = false;
   public errorMsg: string;
+  public displayedColumns = ['article', 'quantity', 'amount'];
 
   get details(): FormArray {
     return this.invoiceFormGroup.get('details') as FormArray;
@@ -37,7 +39,8 @@ export class InvoiceFormComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Invoice,
     public dialogRef: MatDialogRef<InvoiceFormComponent>,
     public formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog,
   ) {
     this.localData = { ...data };
   }
@@ -48,6 +51,31 @@ export class InvoiceFormComponent implements OnInit {
     this.filterCustomer();
     this.filterEmployee();
     this.filterPayment();
+  }
+
+  onSubmit(object: any) {
+    this.dialog.open(DetailFormComponent, {
+      panelClass: 'app-dialog',
+      data: object,
+    }).afterClosed().subscribe(result => {
+      if (result.event === 'Add') {
+        console.log(result.data);
+        this.details.value.push(result.data);
+        // this.create(result.data);
+      } else if (result.event === 'Update') {
+        // this.update(result.data);
+        console.log(result.data);
+      }
+    });
+  }
+
+  onDelete(item: any) {
+    console.log(item);
+    /*  this.dialogService.delete().then((result) => {
+       if (result.value) {
+         this.delete(item.id);
+       }
+     }); */
   }
 
   filterEmployee() {
@@ -173,14 +201,12 @@ export class InvoiceFormComponent implements OnInit {
       this.localData.details.forEach(detail => {
         return this.details.push(this.formBuilder.group(detail));
       });
-    } else {
-      this.details.push(this.buildDetail());
     }
   }
 
   buildDetail() {
     return this.formBuilder.group({
-      article: [{}, Validators.required],
+      article: ['', Validators.required],
       quantity: ['', Validators.required],
     });
   }
