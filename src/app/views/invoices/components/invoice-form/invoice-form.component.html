@@ -11,10 +11,10 @@
       <form novalidate [formGroup]="invoiceFormGroup">
 
         <mat-form-field class="pb-3 w-100">
-          <input matInput placeholder="Please enter a customer." [matAutocomplete]="auto" formControlName="customer">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <input matInput placeholder="Please enter a customer." [matAutocomplete]="autoCustomer"
+            formControlName="customer">
+          <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="displayCustomer">
             <mat-option *ngIf="isLoading">Loading...</mat-option>
-            <!-- <mat-option *ngIf="filteredCustomers.length === 0">No customer found...</mat-option> -->
             <ng-container *ngIf="!isLoading">
               <mat-option *ngFor="let customer of filteredCustomers" [value]="customer">
                 <span>{{customer.firstName}} {{customer.lastName}}</span>
@@ -24,13 +24,29 @@
         </mat-form-field>
 
         <mat-form-field class="pb-3 w-100">
-          <mat-label>Employee</mat-label>
-          <input matInput placeholder="Please enter a employee." formControlName="employee" required>
+          <input matInput placeholder="Please enter a employee." [matAutocomplete]="autoEmployee"
+            formControlName="employee">
+          <mat-autocomplete #autoEmployee="matAutocomplete" [displayWith]="displayEmployee">
+            <mat-option *ngIf="isLoading">Loading...</mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let employee of filteredEmployees" [value]="employee">
+                <span>{{employee.firstName}} {{employee.lastName}}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
 
         <mat-form-field class="pb-3 w-100">
-          <mat-label>Payment Method</mat-label>
-          <input matInput placeholder="Please enter a payment method." formControlName="payment" required>
+          <input matInput placeholder="Please enter a payment method." [matAutocomplete]="autoPayment"
+            formControlName="payment">
+          <mat-autocomplete #autoPayment="matAutocomplete" [displayWith]="displayPayment">
+            <mat-option *ngIf="isLoading">Loading...</mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let payment of filteredPayments" [value]="payment">
+                <span>{{payment.name}}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
 
       </form>

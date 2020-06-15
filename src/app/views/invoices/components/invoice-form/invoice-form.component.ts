@@ -6,6 +6,8 @@ import { InvoiceDetail } from 'src/app/core/models/invoice-detail';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { Customer } from 'src/app/core/models/customer';
 import { HttpClient } from '@angular/common/http';
+import { Employee } from 'src/app/core/models/employee';
+import { Payment } from 'src/app/core/models/payment';
 
 @Component({
   selector: 'app-invoice-form',
@@ -18,6 +20,8 @@ export class InvoiceFormComponent implements OnInit {
   public action: string;
   public invoiceFormGroup: FormGroup;
   public filteredCustomers: any = [];
+  public filteredEmployees: any = [];
+  public filteredPayments: any = [];
   public isLoading = false;
   public errorMsg: string;
 
@@ -42,34 +46,61 @@ export class InvoiceFormComponent implements OnInit {
     this.setAction();
     this.buildForm();
     this.filterCustomer();
+    this.filterEmployee();
+    this.filterPayment();
+  }
+
+  filterEmployee() {
+    this.invoiceFormGroup.get('employee').valueChanges.pipe(
+      debounceTime(500), tap(() => {
+        this.errorMsg = '';
+        this.filteredEmployees = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => {
+        if (typeof value === 'string') {
+          return this.http.get(`http://localhost:8080/api/v1/employee/all?filter=${value}`)
+            .pipe(finalize(() => { this.isLoading = false; }));
+        } else {
+          return this.http.get(`http://localhost:8080/api/v1/employee/all`)
+            .pipe(finalize(() => { this.isLoading = false; }));
+        }
+      }))
+      .subscribe(data => {
+        if (data === undefined) {
+          this.errorMsg = 'Error';
+          this.filteredEmployees = [];
+        } else {
+          this.errorMsg = '';
+          this.filteredEmployees = data;
+        }
+      });
+  }
+
+  displayEmployee(object: Employee) {
+    if (object) {
+      return object.firstName + ' ' + object.lastName;
+    } else {
+      return '';
+    }
   }
 
   filterCustomer() {
-    this.invoiceFormGroup.get('customer').valueChanges
-      .pipe(
-        debounceTime(500),
-        tap(() => {
-          this.errorMsg = '';
-          this.filteredCustomers = [];
-          this.isLoading = true;
-        }),
-        switchMap(value => {
-          if (typeof value === 'string') {
-            return this.http.get('http://localhost:8080/api/v1/customer/all?filter=' + value)
-              .pipe(
-                finalize(() => {
-                  this.isLoading = false;
-                }));
-          } else {
-            return this.http.get('http://localhost:8080/api/v1/customer/all')
-              .pipe(
-                finalize(() => {
-                  this.isLoading = false;
-                }));
-          }
+    this.invoiceFormGroup.get('customer').valueChanges.pipe(
+      debounceTime(500), tap(() => {
+        this.errorMsg = '';
+        this.filteredCustomers = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => {
+        if (typeof value === 'string') {
+          return this.http.get(`http://localhost:8080/api/v1/customer/all?filter=${value}`)
+            .pipe(finalize(() => { this.isLoading = false; }));
+        } else {
+          return this.http.get(`http://localhost:8080/api/v1/customer/all`)
+            .pipe(finalize(() => { this.isLoading = false; }));
         }
-        )
-      )
+      }))
       .subscribe(data => {
         if (data === undefined) {
           this.errorMsg = 'Error';
@@ -78,14 +109,47 @@ export class InvoiceFormComponent implements OnInit {
           this.errorMsg = '';
           this.filteredCustomers = data;
         }
-        console.log(this.filteredCustomers);
       });
   }
 
-  // Este método muestra el valor cuando se selecciona una opción, sino sale [object Object]
-  displayFn(object: Customer) {
+  displayCustomer(object: Customer) {
     if (object) {
       return object.firstName + ' ' + object.lastName;
+    } else {
+      return '';
+    }
+  }
+
+  filterPayment() {
+    this.invoiceFormGroup.get('payment').valueChanges.pipe(
+      debounceTime(500), tap(() => {
+        this.errorMsg = '';
+        this.filteredPayments = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => {
+        if (typeof value === 'string') {
+          return this.http.get(`http://localhost:8080/api/v1/payment/all?filter=${value}`)
+            .pipe(finalize(() => { this.isLoading = false; }));
+        } else {
+          return this.http.get(`http://localhost:8080/api/v1/payment/all`)
+            .pipe(finalize(() => { this.isLoading = false; }));
+        }
+      }))
+      .subscribe(data => {
+        if (data === undefined) {
+          this.errorMsg = 'Error';
+          this.filteredPayments = [];
+        } else {
+          this.errorMsg = '';
+          this.filteredPayments = data;
+        }
+      });
+  }
+
+  displayPayment(object: Payment) {
+    if (object) {
+      return object.name;
     } else {
       return '';
     }
