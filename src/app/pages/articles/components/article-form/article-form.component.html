@@ -9,22 +9,46 @@
     <mat-form-field class="pb-3 w-100">
       <mat-label>Name</mat-label>
       <input matInput placeholder="Please enter a name." formControlName="name" required>
+      <mat-error *ngIf="errorHandling('name', 'required')">
+        Name is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="errorHandling('name', 'pattern')">
+        Name is <strong>invalid</strong>.
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="pb-3 w-100">
       <mat-label>Category</mat-label>
       <input matInput placeholder="Please enter a category." formControlName="category" required>
+      <mat-error *ngIf="errorHandling('category', 'required')">
+        Category is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="errorHandling('category', 'pattern')">
+        Category is <strong>invalid</strong>.
+      </mat-error>
     </mat-form-field>
     <div class="row">
       <div class="col">
         <mat-form-field class="pb-3 w-100">
           <mat-label>Unit Price</mat-label>
           <input matInput placeholder="Please enter the unit price." formControlName="unitPrice" required>
+          <mat-error *ngIf="errorHandling('unitPrice', 'required')">
+            Unit Price is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('unitPrice', 'pattern')">
+            Unit Price is <strong>invalid</strong>.
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="col">
         <mat-form-field class="pb-3 w-100">
           <mat-label>Stock Units</mat-label>
           <input matInput placeholder="Please enter the quantity in stock." formControlName="stockUnits" required>
+          <mat-error *ngIf="errorHandling('stockUnits', 'required')">
+            Stock Units is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('stockUnits', 'pattern')">
+            Stock Units is <strong>invalid</strong>.
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -33,5 +57,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="pb-4">
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onAction()" cdkFocusInitial> {{ action }} </button>
+  <button mat-button (click)="onAction()" [disabled]="!articleFormGroup.valid" cdkFocusInitial> {{ action }} </button>
 </mat-dialog-actions>
