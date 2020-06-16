@@ -59,23 +59,96 @@ export class InvoiceFormComponent implements OnInit {
       data: object,
     }).afterClosed().subscribe(result => {
       if (result.event === 'Add') {
-        console.log(result.data);
-        this.details.value.push(result.data);
-        // this.create(result.data);
+        this.create(result.data);
       } else if (result.event === 'Update') {
-        // this.update(result.data);
-        console.log(result.data);
+        this.update(result.data);
       }
     });
   }
 
   onDelete(item: any) {
-    console.log(item);
-    /*  this.dialogService.delete().then((result) => {
-       if (result.value) {
-         this.delete(item.id);
-       }
-     }); */
+    this.delete(item.id);
+  }
+
+  create(result: InvoiceDetail) {
+    this.details.value.push(result);
+    this.notifyTable();
+  }
+
+  update(result: InvoiceDetail) {
+    this.details.value.filter((value) => {
+      if (value.id === result.id) {
+        const index = this.details.value.indexOf(value);
+        this.details.value[index] = result;
+      }
+    });
+    this.notifyTable();
+  }
+
+  // Creo que se puede hacer de una manera mas eficiente
+  delete(id: number) {
+    const newValue = this.details.value.filter((value) =>
+      value.id !== id
+    );
+    this.invoiceFormGroup.setControl('details', this.formBuilder.array(newValue));
+  }
+
+  notifyTable() {
+    this.invoiceFormGroup.setControl('details', this.formBuilder.array([...this.details.value]));
+  }
+
+  buildForm() {
+    this.invoiceFormGroup = this.formBuilder.group({
+      id: [this.localData.id, [Validators.required]],
+      createdAt: [this.localData.createdAt],
+      updatedAt: [this.localData.updatedAt],
+      deleted: [this.localData.deleted],
+      totalAmount: [this.localData.totalAmount],
+      employee: [this.localData.employee, [Validators.required]],
+      customer: [this.localData.customer, [Validators.required]],
+      payment: [this.localData.payment, [Validators.required]],
+      details: this.formBuilder.array([])
+    });
+    this.setDetails();
+  }
+
+  setDetails() {
+    if (this.localData.details) {
+      this.localData.details.forEach(detail => {
+        return this.details.push(this.formBuilder.group(detail));
+      });
+    }
+  }
+
+  buildDetail() {
+    return this.formBuilder.group({
+      article: ['', Validators.required],
+      quantity: ['', Validators.required],
+    });
+  }
+
+  addDetail(): void {
+    this.details.push(this.buildDetail());
+  }
+
+  removeDetail(index: number): void {
+    this.details.removeAt(index);
+  }
+
+  setAction() {
+    this.action = (this.localData.id) ? 'Update' : 'Add';
+  }
+
+  onAction() {
+    this.dialogRef.close({ event: this.action, data: this.invoiceFormGroup.value });
+  }
+
+  onCancel() {
+    this.dialogRef.close({ event: 'Cancel' });
+  }
+
+  errorHandling = (control: string, error: string) => {
+    return this.invoiceFormGroup.controls[control].hasError(error);
   }
 
   filterEmployee() {
@@ -181,58 +254,6 @@ export class InvoiceFormComponent implements OnInit {
     } else {
       return '';
     }
-  }
-
-  buildForm() {
-    this.invoiceFormGroup = this.formBuilder.group({
-      id: [this.localData.id, [Validators.required]],
-      createdAt: [this.localData.createdAt],
-      updatedAt: [this.localData.updatedAt],
-      employee: [this.localData.employee, [Validators.required]],
-      customer: [this.localData.customer, [Validators.required]],
-      payment: [this.localData.payment, [Validators.required]],
-      details: this.formBuilder.array([])
-    });
-    this.setDetails();
-  }
-
-  setDetails() {
-    if (this.localData.details) {
-      this.localData.details.forEach(detail => {
-        return this.details.push(this.formBuilder.group(detail));
-      });
-    }
-  }
-
-  buildDetail() {
-    return this.formBuilder.group({
-      article: ['', Validators.required],
-      quantity: ['', Validators.required],
-    });
-  }
-
-  addDetail(): void {
-    this.details.push(this.buildDetail());
-  }
-
-  removeDetail(index: number): void {
-    this.details.removeAt(index);
-  }
-
-  setAction() {
-    this.action = (this.localData.id) ? 'Update' : 'Add';
-  }
-
-  onAction() {
-    this.dialogRef.close({ event: this.action, data: this.invoiceFormGroup.value });
-  }
-
-  onCancel() {
-    this.dialogRef.close({ event: 'Cancel' });
-  }
-
-  errorHandling = (control: string, error: string) => {
-    return this.invoiceFormGroup.controls[control].hasError(error);
   }
 
 }

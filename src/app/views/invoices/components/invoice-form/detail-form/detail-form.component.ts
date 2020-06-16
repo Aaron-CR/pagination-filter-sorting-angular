@@ -69,7 +69,7 @@ export class DetailFormComponent implements OnInit {
   }
 
   setAction() {
-    this.action = (this.localData.id) ? 'Update' : 'Add';
+    this.action = (this.localData && (Object.keys(this.localData).length === 0)) ? 'Add' : 'Update';
   }
 
   onAction() {

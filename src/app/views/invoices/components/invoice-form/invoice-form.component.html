@@ -112,10 +112,11 @@
       <ng-template matStepLabel>Done</ng-template>
       <h4>Invoice Form Group</h4>
       <p> {{ invoiceFormGroup.value | json }}</p>
-      <div>
+      <mat-dialog-actions align="end" class="pb-4">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button (click)="onAction()" cdkFocusInitial> {{ action }} </button>
+      </mat-dialog-actions>
     </mat-step>
   </mat-horizontal-stepper>
 </mat-dialog-content>
