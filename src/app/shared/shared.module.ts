@@ -1,27 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-
-// Components
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SplitCamelCasePipe } from './pipes/split-camel-case.pipe';
-import { MaterialModule } from '../material/material.module';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-
-// Directives
-// Pipes
-// Validators
+import { MaterialModule } from './material/material.module';
 
 
 @NgModule({
   declarations: [
-    // Components
     ToolbarComponent,
     ConfirmDialogComponent,
-    // Pipes
     SplitCamelCasePipe
   ],
   imports: [
@@ -35,10 +26,9 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    // Components
+    MaterialModule,
     ToolbarComponent,
     ConfirmDialogComponent,
-    // Pipes
     SplitCamelCasePipe
   ],
   entryComponents: [ConfirmDialogComponent]

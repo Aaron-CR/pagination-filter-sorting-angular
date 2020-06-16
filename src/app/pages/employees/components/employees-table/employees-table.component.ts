@@ -18,7 +18,7 @@ export class EmployeesTableComponent implements OnInit {
     { columnDef: 'email', header: 'E-mail', cell: (employee: Employee) => `${employee.email}` },
     { columnDef: 'phone', header: 'Phone', cell: (employee: Employee) => `${employee.phone}` },
     { columnDef: 'cargo', header: 'Cargo', cell: (employee: Employee) => `${employee.shift}` }
-  ]
+  ];
 
   public displayedColumns = this.tableColumns.map(c => c.columnDef);
   public icon = 'people_alt';

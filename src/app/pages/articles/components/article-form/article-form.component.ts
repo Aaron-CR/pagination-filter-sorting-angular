@@ -54,4 +54,5 @@ export class ArticleFormComponent implements OnInit {
   errorHandling = (control: string, error: string) => {
     return this.articleFormGroup.controls[control].hasError(error);
   }
+
 }

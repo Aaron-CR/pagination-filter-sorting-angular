@@ -14,7 +14,7 @@ export class EmployeesFormComponent implements OnInit {
   public localData: Employee;
   public action: string;
   public customerFormGroup: FormGroup;
-  
+
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: Employee,
     public dialogRef: MatDialogRef<EmployeesFormComponent>,
@@ -46,17 +46,17 @@ export class EmployeesFormComponent implements OnInit {
 
   onAction() {
     const dialogRef = this.confirmDialog.dialog.open(ConfirmDialogComponent, {
-      maxWidth: "400px",
+      maxWidth: '400px',
       data: this.confirmDialog.dialogData
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       this.confirmDialog.result = dialogResult;
 
-      if(this.confirmDialog.result){
+      if (this.confirmDialog.result) {
         this.dialogRef.close({ event: this.action, data: this.customerFormGroup.value });
       }
-    });   
+    });
   }
 
   onCancel() {
