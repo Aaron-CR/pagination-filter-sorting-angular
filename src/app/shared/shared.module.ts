@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SplitCamelCasePipe } from './pipes/split-camel-case.pipe';
 import { MaterialModule } from '../material/material.module';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 // Directives
 // Pipes
@@ -19,6 +20,7 @@ import { MaterialModule } from '../material/material.module';
   declarations: [
     // Components
     ToolbarComponent,
+    ConfirmDialogComponent,
     // Pipes
     SplitCamelCasePipe
   ],
@@ -35,8 +37,10 @@ import { MaterialModule } from '../material/material.module';
     FormsModule,
     // Components
     ToolbarComponent,
+    ConfirmDialogComponent,
     // Pipes
     SplitCamelCasePipe
-  ]
+  ],
+  entryComponents: [ConfirmDialogComponent]
 })
 export class SharedModule { }
