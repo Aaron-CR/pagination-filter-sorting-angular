@@ -31,12 +31,26 @@ export class EmployeesFormComponent implements OnInit {
 
   buildForm() {
     this.customerFormGroup = this.formBuilder.group({
-      id: [this.localData.id, Validators.required],
-      firstName: [this.localData.firstName, Validators.required],
-      lastName: [this.localData.lastName, Validators.required],
-      email: [this.localData.email, Validators.required],
-      phone: [this.localData.phone, Validators.required],
-      shift: [this.localData.shift, Validators.required]
+      id: [this.localData.id],
+      firstName: [this.localData.firstName, Validators.compose([
+        Validators.required,
+        Validators.pattern('^[A-Za-z]+$') //Only Letters
+      ])],
+      lastName: [this.localData.lastName, Validators.compose([
+        Validators.required,
+        Validators.pattern('^[A-Za-z]+$') //Only Letters
+      ])],
+      email: [this.localData.email, Validators.compose([
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$") //Letters and Numbers
+      ])],
+      phone: [this.localData.phone, Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+$') //Only Numbers
+      ])],
+      shift: [this.localData.shift, Validators.compose([
+        Validators.required
+      ])]
     });
   }
 
