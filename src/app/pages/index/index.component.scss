@@ -1,0 +1,72 @@
+$light-gray: #eceef1;
+$gray: darken(#eceef1, 30%);
+$slate: darken(#eceef1, 70%);
+$primary: #3f51b5;
+
+//Grid Container
+.cards {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+//Cards
+.card {
+  margin: 15px;
+
+  width: calc((100% / 3) - 30px);
+  transition: all 0.2s ease-in-out;
+
+  //media queries for stacking cards
+  @media screen and (max-width: 991px) {
+    width: calc((100% / 2) - 30px);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+
+  &:hover {
+    .card_inner {
+      background-color: $primary;
+      transform: scale(1.05);
+      box-shadow: 0 6px 6px 6px rgba(black, 0.2);
+    }
+  }
+
+  &_inner {
+    width: 100%;
+    padding: 30px;
+    border-radius: 25px;
+    position: relative;
+    cursor: pointer;
+
+    background-color: $gray;
+    color: $light-gray;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    text-align: center;
+
+    transition: all 0.2s ease-in-out;
+
+    &:after {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .mat-icon {
+      font-size: 50px;
+      width: 100%;
+      margin-top: 0.25em;
+    }
+  }
+}
+
+//when 3 cards in a row
+@media screen and (min-width: 992px) {
+}
+
+//when 2 cards in a row
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .card:nth-of-type(2n + 3) {
+    clear: left;
+  }
+}

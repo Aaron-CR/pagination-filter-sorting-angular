@@ -1,0 +1,47 @@
+<div mat-dialog-title class="d-flex justify-content-between align-items-center app-dialog-title">
+  <span> Employee Details </span>
+  <button mat-button mat-icon-button (click)="onCancel()">
+    <mat-icon> close </mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="app-content">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="d-flex align-items-center">
+          <button mat-mini-fab disabled class="mr-3">
+            <mat-icon>{{ icon }}</mat-icon>
+          </button>
+          <h3 class="row article-cod" style="font-size: 27px;">Employee</h3>
+        </div>
+      </div>
+      <div class="col">
+        <div class="float-right button-col">
+          <button mat-raised-button color="primary" class="ml-3">
+            <span>Deshabilitar Cuenta</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <div>
+          <div class="detail-header">Name</div>
+          <div class="detail-table">{{localData.firstName}} {{localData.lastName}}</div>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          <div class="detail-header">Email</div>
+          <div class="detail-table">{{localData.email}}</div>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          <div class="detail-header">Phone</div>
+          <div class="detail-table">{{localData.phone}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

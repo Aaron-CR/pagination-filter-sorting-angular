@@ -1,0 +1,64 @@
+/* CARD */
+.card {
+  border-radius: 25px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: lightgray;
+}
+
+/* HEADER */
+.header {
+  margin: 15px 30px;
+}
+
+h1 {
+  font-size: 32px;
+  margin: 0px;
+}
+
+.app-search {
+  display: flex;
+  flex-direction: row;
+  border-width: 1px;
+  border-style: solid;
+  border-color: lightgrey;
+  padding: 6px 25px;
+  border-radius: 25px;
+}
+
+::ng-deep .app-form-field .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+/* TABLE */
+.progress-bar {
+  height: 4px;
+}
+
+.mat-table {
+  min-height: 440px;
+}
+
+.mat-column-actions {
+  flex: 0 0 90px !important;
+}
+
+.table-row:hover {
+  background: whitesmoke;
+}
+
+.mat-paginator {
+  border-radius: 0 0 25px 25px;
+  border-top: 1px solid lightgrey;
+}
+
+/* BUTTON */
+.mat-flat-button {
+  padding: 0 30px;
+  border-radius: 25px;
+  font-size: 16px;
+}
+
+.app-menu-icon {
+  font-size: 20px;
+}

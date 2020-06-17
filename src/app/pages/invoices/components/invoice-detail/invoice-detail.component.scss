@@ -1,0 +1,52 @@
+.app-card {
+  padding: 64px 88px;
+}
+
+.invoice-date {
+  font-size: 16px;
+  margin-bottom: 32px;
+  line-height: 19.6px;
+}
+
+.customer {
+  align-self: center;
+}
+.invoice-number .title {
+  font-size: 18px;
+}
+.invoice-number .number {
+  font-size: 18px;
+  padding-left: 6px;
+  color: #000000de;
+}
+
+.accent {
+  color: white;
+  background-color: #3f51b5 !important;
+  margin-right: -88px;
+}
+
+.issuer .logo {
+  width: 96px;
+  padding: 0 8px;
+  align-self: center;
+  border-right: 1px solid #fff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.issuer .info {
+  padding: 16px;
+  font-weight: 500;
+}
+
+.mat-footer-cell {
+  font-size: 24px !important;
+  color: rgba(0, 0, 0, 0.87);
+  padding-top: 24px;
+  padding-bottom: 24px;
+}

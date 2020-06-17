@@ -1,0 +1,77 @@
+<div mat-dialog-title class="d-flex justify-content-between align-items-center app-dialog-title">
+  <span> {{ action }} Customer </span>
+  <button mat-button mat-icon-button (click)="onCancel()">
+    <mat-icon> close </mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="app-content">
+  <form [formGroup]="customerFormGroup" novalidate>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="pb-3 w-100">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Please enter a first name." formControlName="firstName" required>
+          <mat-error *ngIf="errorHandling('firstName', 'required')">
+            First Name is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('firstName', 'pattern')">
+            First Name is <strong>invalid</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="pb-3 w-100">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Please enter a last name." formControlName="lastName" required>
+          <mat-error *ngIf="errorHandling('lastName', 'required')">
+            Last Name is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('lastName', 'pattern')">
+            Last Name is <strong>invalid</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-form-field class="pb-3 w-100">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Please enter a email." formControlName="email" required>
+      <mat-error *ngIf="errorHandling('email', 'required')">
+        Email is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="errorHandling('email', 'pattern')">
+        Email is <strong>invalid</strong>.
+      </mat-error>
+    </mat-form-field>
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="pb-3 w-100">
+          <mat-label>Phone</mat-label>
+          <input matInput placeholder="Please enter a phone number." formControlName="phone" required>
+          <mat-error *ngIf="errorHandling('phone', 'required')">
+            Phone is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('phone', 'pattern')">
+            Phone is <strong>invalid</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="pb-3 w-100">
+          <mat-label>FEIN</mat-label>
+          <input matInput placeholder="Please enter a FEIN number." formControlName="fein" required>
+          <mat-error *ngIf="errorHandling('fein', 'required')">
+            Fein is <strong>required</strong>.
+          </mat-error>
+          <mat-error *ngIf="errorHandling('fein', 'pattern')">
+            Fein is <strong>invalid</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  {{ customerFormGroup.value | json}}
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="pb-4">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onAction()" cdkFocusInitial [disabled]="!customerFormGroup.valid"> {{ action }} </button>
+</mat-dialog-actions>
